@@ -67,9 +67,12 @@
         app:iss_delay="0"
         app:iss_period="2500"
         android:id="@+id/slider"
-        android:layout_below="@+id/topBar">
+        android:layout_below="@+id/topBar"
+        app:iss_selected_dot="@drawable/transparentdot"
+        app:iss_unselected_dot="@drawable/transparentdot">
 
     </com.denzcoskun.imageslider.ImageSlider>
+
 
     <LinearLayout
         android:id="@+id/empty"
