@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:textColor="@color/white"
-            android:text="JEC Teacher / JEC 教师"
-            android:textSize="16sp"
+            android:text="Teacher Panel\n       师面板"
+            android:textSize="@dimen/header_text_size"
             android:textStyle="bold"
             />
 
@@ -52,8 +52,9 @@
             android:layout_marginTop="40dp"
             android:layout_marginHorizontal="70dp"
             android:background="@drawable/roundtextbackground"
-            android:text="Apply For Jobs / 申请工作"
+            android:text="Apply For Jobs\n申请工作"
             android:textColor="@color/white"
+            android:textSize="@dimen/button_text_size"
             android:elevation="10dp"
             android:textAllCaps="false"
             />
@@ -65,7 +66,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginHorizontal="70dp"
             android:background="@drawable/roundtextbackground"
-            android:text="Hire Teacher"
+            android:text="Hire Foreign Teachers"
+            android:textSize="@dimen/button_text_size"
             android:textColor="@color/white"
             android:elevation="10dp"
             android:textAllCaps="false"

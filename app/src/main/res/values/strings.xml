@@ -8,5 +8,5 @@
     <string name="cart">Cart</string>
     <string name="profile">Profile</string>
     <string name="login">Login/登录</string>
-    <string name="forgotPassword"><u>Forgot Password</u></string>
+    <string name="forgotPassword"><u>Forgot Password/忘记密码</u></string>
 </resources>
