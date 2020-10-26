@@ -3,7 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="form_field_padding">7dp</dimen>
+
     <dimen name="header_text_size">@dimen/_10ssp</dimen>
     <dimen name="button_text_size">@dimen/_9ssp</dimen>
+    <dimen name="form_text_size">@dimen/_9ssp</dimen>
 
 </resources>

@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel(R.drawable.banner3, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.banner4, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.banner5, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.banner6, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.banner2, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.banner7, ScaleTypes.FIT));
         slider.setImageList(slideModels, ScaleTypes.FIT);
     }

@@ -15,17 +15,23 @@
     android:padding="10dp"
     android:id="@+id/relavtive1"
     android:orientation="horizontal"
-    android:gravity="center"
+    android:gravity="center_vertical"
         android:layout_alignParentTop="true">
 
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_navigate_before_24"/>
 
-    <TextView
+
+
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:textColor="@color/white"
         android:text="New User / 新用户"
-        android:textSize="16sp"
+        android:textSize="@dimen/header_text_size"
         android:textStyle="bold"
         />
 
@@ -98,9 +104,11 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="40dp"
             android:background="@drawable/rounded_button"
-            android:text="Sign Up / 注册"
+            android:textAllCaps="false"
+            android:text="Sign Up\n注册"
             android:layout_below="@+id/phone"
             android:textColor="#FFF"
+            android:textSize="@dimen/button_text_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

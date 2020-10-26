@@ -25,10 +25,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:textColor="@color/white"
-            android:text="Apply For Job / 申请工作"
-            android:textSize="16sp"
+            android:text="Apply For Job\n    申请工作"
+            android:textSize="@dimen/header_text_size"
             android:textStyle="bold"
             />
 
@@ -55,29 +55,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Self (#)"
-                android:textSize="12sp"
+                android:textSize="@dimen/form_text_size"
                 android:textColor="@color/colorPrimary"
                 android:background="@drawable/bordersimple"
                 android:paddingHorizontal="5dp"
-                android:paddingVertical="5dp" />
+                android:paddingVertical="@dimen/form_field_padding" />
 
-            <LinearLayout
+            <Spinner
+                android:id="@+id/agentSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/bordersimple"
-                android:orientation="vertical">
-
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/agentSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="12sp"
-                    app:ms_text_color="@color/colorPrimary" />
-
-            </LinearLayout>
-
-
+                android:layout_height="wrap_content"
+                android:entries="@array/agentArray"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                android:spinnerMode="dropdown"/>
 
 
         </LinearLayout>

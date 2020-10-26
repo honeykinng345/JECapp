@@ -18,14 +18,14 @@ import j.e.c.com.R;
 public class TeacherApplyFragment extends Fragment {
 
 
-    @BindView(R.id.agentSpinner)
-    MaterialSpinner agentSpinner;
+   // @BindView(R.id.agentSpinner)
+    //MaterialSpinner agentSpinner;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_teacher_apply, container, false);
-        ButterKnife.bind(this, view);
+       // ButterKnife.bind(this, view);
         return view;
     }
 
@@ -38,7 +38,7 @@ public class TeacherApplyFragment extends Fragment {
 
     void updateSpinners() {
         String[] agentArray = {"Agent Reference", "JEC1", "JEC2"};
-        agentSpinner.setItems(agentArray);
-        agentSpinner.setSelectedIndex(0);
+        //agentSpinner.setItems(agentArray);
+        //agentSpinner.setSelectedIndex(0);
     }
 }
