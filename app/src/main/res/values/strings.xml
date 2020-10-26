@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">JECapp</string>
+    <string name="title_home">Home/家</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="like">Like/喜欢</string>
+    <string name="chat">Chat/聊天</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
+    <string name="login">Login/登录</string>
+    <string name="forgotPassword"><u>Forgot Password</u></string>
+</resources>

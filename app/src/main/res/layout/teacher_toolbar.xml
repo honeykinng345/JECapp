@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:paddingVertical="9dp"
+    android:paddingHorizontal="9dp">
+
+    <ImageView
+        android:id="@+id/menu"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_menu"
+        android:layout_alignParentLeft="true"
+        />
+
+    <ImageView
+        android:id="@+id/map"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_pin"
+        android:layout_toLeftOf="@+id/other"
+        android:layout_marginRight="15dp"/>
+
+    <ImageView
+        android:id="@+id/other"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_menu"
+        android:layout_alignParentRight="true"/>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/menu"
+        android:layout_toLeftOf="@id/map"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/roundedborder">
+
+        <ImageView
+            android:id="@+id/search_icon"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="10dp"
+            android:src="@drawable/ic_search"/>
+
+        <ImageView
+            android:id="@+id/camera"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/goText"
+            android:paddingRight="10dp"
+            android:src="@drawable/ic_camera"
+            />
+
+        <TextView
+            android:id="@+id/goText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:text="GO"
+            android:textColor="@color/white"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="20dp"
+            android:background="@drawable/roundtextbackground"/>
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
