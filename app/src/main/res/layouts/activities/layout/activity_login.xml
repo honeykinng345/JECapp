@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activites.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/shape_react01"
+        android:padding="10dp"
+        android:id="@+id/relavtive1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_navigate_before_24"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/white"
+            android:text="Login / 登录"
+            android:textSize="@dimen/header_text_size"
+            android:textStyle="bold"
+            />
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingHorizontal="40dp"
+        android:id="@+id/linear1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorPrimary"
+            android:text="Login / 登录"
+            android:textSize="16sp"
+            />
+
+    <com.hbb20.CountryCodePicker
+        android:layout_width="match_parent"
+        android:id="@+id/picPhone"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="40dp"
+       app:ccp_autoDetectCountry="true"
+        android:padding="5dp"
+
+        android:drawablePadding="7dp"
+        android:background="@drawable/shape_rect02"
+   >
+
+    </com.hbb20.CountryCodePicker>
+
+        <!--phone -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_rect02"
+            android:layout_marginTop="10dp"
+            android:paddingTop="@dimen/text_layout_paddin_top"
+            app:errorEnabled="true"
+            app:hintTextAppearance="@style/CustomTextAppearance"
+            app:errorTextAppearance="@style/ErrorTextAppearance">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                android:paddingTop="@dimen/editTextPaddingTop"
+                android:hint="@string/phone_number"
+                android:textSize="@dimen/job_form_text_size"
+                android:inputType="text"
+                android:maxLines="1"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--password -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_rect02"
+            android:layout_marginTop="10dp"
+            android:paddingTop="@dimen/text_layout_paddin_top"
+            app:errorEnabled="true"
+            app:hintTextAppearance="@style/CustomTextAppearance"
+            app:errorTextAppearance="@style/ErrorTextAppearance">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                android:paddingTop="@dimen/editTextPaddingTop"
+                android:hint="@string/password"
+                android:textSize="@dimen/job_form_text_size"
+                android:inputType="textPassword"
+                android:maxLines="1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/forgotPswrd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="foreget"
+            android:layout_marginTop="10dp"
+            android:text="@string/forgotPassword"
+            android:textColor="@color/colorPrimary"
+            android:gravity="right"
+
+            android:textSize="@dimen/button_text_size"
+            />
+
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="205dp"
+        android:layout_height="40dp"
+
+        android:layout_centerHorizontal="true"
+        android:layout_margin="40dp"
+
+        android:background="@drawable/rounded_button"
+        android:text="Login / 登录"
+        android:layout_below="@+id/password"
+        android:textColor="#FFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:id="@+id/tvRegister"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="@dimen/_30sdp"
+    android:text="Dont Have An Account ? Register Here"
+    android:textColor="@color/colorPrimary"
+    android:layout_height="wrap_content">
+
+</TextView>
+
+
+</RelativeLayout>

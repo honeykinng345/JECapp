@@ -7,6 +7,24 @@
 
     <dimen name="header_text_size">@dimen/_10ssp</dimen>
     <dimen name="button_text_size">@dimen/_9ssp</dimen>
+    <dimen name="button_text_size_small">@dimen/_5ssp</dimen>
     <dimen name="form_text_size">@dimen/_9ssp</dimen>
+    <dimen name="rehan_button_height">40dp</dimen>
+    <dimen name="job_list_text_size">@dimen/_5ssp</dimen>
+
+    <dimen name="drop_down_offset_vertical">@dimen/_20sdp</dimen>
+
+
+    <!-- job form dimens -->
+    <dimen name="text_layout_paddin_top">@dimen/_5sdp</dimen>
+    <dimen name="editText_padding">@dimen/_5sdp</dimen>
+    <dimen name="editTextPaddingTop">@dimen/_2sdp</dimen>
+    <dimen name="editText_marginHorizontal">@dimen/_7sdp</dimen>
+    <dimen name="job_form_text_size">@dimen/_10ssp</dimen>
+
+    <dimen name="dialogTextSize">@dimen/_10ssp</dimen>
+    <dimen name="scheduleText">@dimen/_9ssp</dimen>
+
+
 
 </resources>

@@ -26,7 +26,7 @@ public class RegistrationFragment extends Fragment {
         return view;
     }
 
-    @OnClick({R.id.registerBtn, R.id.LoginBtn})
+    @OnClick({R.id.registerBtn, R.id.LoginBtn, R.id.backArrow})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.registerBtn:
@@ -34,6 +34,9 @@ public class RegistrationFragment extends Fragment {
                 break;
             case R.id.LoginBtn:
                 startActivity(new Intent(getContext(), LoginActivity.class));
+                break;
+            case R.id.backArrow:
+                getFragmentManager().popBackStack();
                 break;
         }
     }

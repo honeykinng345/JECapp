@@ -1,0 +1,199 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardViewLayoutNotif"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_15sdp"
+    app:cardElevation="@dimen/_3sdp"
+    app:cardCornerRadius="@dimen/_15sdp"
+    app:cardUseCompatPadding="true"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:elevation="@dimen/_5sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"
+            android:background="@color/red"
+            android:orientation="vertical"/>
+
+        <RelativeLayout
+            android:id="@+id/linearOuterNotif"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minHeight="62dp">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_marginEnd="@dimen/_5sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_10sdp"
+    android:text="12/30/2020"
+    android:layout_height="wrap_content"
+    android:textSize="@dimen/scheduleText">
+
+</TextView>
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical|center|start"
+                android:layout_marginStart="?android:attr/listPreferredItemPaddingStart"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:srcCompat="@drawable/calendar"
+                app:tint="@color/hintColor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="?android:attr/listPreferredItemPaddingStart"
+                android:layout_marginEnd="?android:attr/listPreferredItemPaddingEnd"
+                android:layout_toEndOf="@+id/thumbnail"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="@dimen/_10sdp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Date"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textSize="@dimen/scheduleText"
+                    android:textColor="@color/hintColor"/>
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Thursday, November 5"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="@dimen/scheduleText" />
+
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minHeight="52dp">
+
+
+            <ImageView
+                android:id="@+id/thumbnail1"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical|center|start"
+                android:layout_marginStart="?android:attr/listPreferredItemPaddingStart"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:srcCompat="@drawable/ic_clock"
+                app:tint="@color/hintColor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="?android:attr/listPreferredItemPaddingStart"
+                android:layout_marginEnd="?android:attr/listPreferredItemPaddingEnd"
+                android:layout_toEndOf="@+id/thumbnail1"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="@dimen/_10sdp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Time"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textSize="@dimen/scheduleText"
+                    android:textColor="@color/hintColor"/>
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="2:00 PM"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="@dimen/scheduleText" />
+
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right|center_vertical"
+            android:paddingBottom="@dimen/_5sdp">
+
+            <TextView
+                android:id="@+id/changeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/scheduleText"/>
+
+            <TextView
+                android:id="@+id/confirm_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:text="Confirm"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/scheduleText"/>
+
+
+
+            <TextView
+                android:id="@+id/wait"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:text="Waiting for link "
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/scheduleText"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>

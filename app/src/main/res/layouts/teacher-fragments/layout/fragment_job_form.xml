@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/shape_react01"
+        android:padding="10dp"
+        android:id="@+id/toolBar"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_navigate_before_24"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            android:gravity="center_vertical"
+            android:text="Apply For Job\n申请工作"
+            android:textSize="@dimen/header_text_size"
+            android:textStyle="bold" />
+
+
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolBar"
+        android:src="@drawable/worldmap"
+        android:scaleType="centerCrop"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolBar"
+        android:elevation="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:src="@drawable/recurmentlogo"/>
+
+            <!--Name -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="20dp"
+                android:paddingTop="@dimen/text_layout_paddin_top"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/CustomTextAppearance"
+                app:errorTextAppearance="@style/ErrorTextAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                    android:paddingTop="@dimen/editTextPaddingTop"
+                    android:hint="@string/name"
+                    android:textSize="@dimen/job_form_text_size"
+                    android:inputType="text"
+                    android:maxLines="1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--age -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:paddingTop="@dimen/text_layout_paddin_top"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/CustomTextAppearance"
+                app:errorTextAppearance="@style/ErrorTextAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                    android:paddingTop="@dimen/editTextPaddingTop"
+                    android:hint="@string/age"
+                    android:textSize="@dimen/job_form_text_size"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:maxLength="3"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:hint="@string/nationality"
+                app:hintTextAppearance="@style/spinnerHint"
+                android:orientation="horizontal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/nationality"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textSize="@dimen/form_text_size"
+                    android:background="@drawable/shape_rect02"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_disable"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- row3 country -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-1dp"
+                android:orientation="vertical"
+                android:background="@drawable/bordersimple">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_7sdp"
+                    android:text="@string/your_country"
+                    android:textSize="@dimen/form_text_size"
+                    android:textColor="#808080"/>
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/countrySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:ccp_autoDetectCountry="true"
+
+                    app:ccp_showFullName="true"
+                    app:ccp_showPhoneCode="false"
+                    app:ccp_showNameCode="false"
+
+                    app:ccp_textSize="@dimen/form_text_size"
+                    app:ccp_textGravity="LEFT"
+                    app:ccp_contentColor="@color/colorPrimary"
+                    app:ccpDialog_textColor="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:hint="Gender"
+                app:hintTextAppearance="@style/spinnerHint"
+                android:orientation="horizontal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textSize="@dimen/form_text_size"
+                    android:background="@drawable/shape_rect02"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_disable"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/salary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:paddingTop="@dimen/text_layout_paddin_top"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/CustomTextAppearance"
+                app:errorTextAppearance="@style/ErrorTextAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                    android:paddingTop="@dimen/editTextPaddingTop"
+                    android:hint="@string/salary_demand"
+                    android:textSize="@dimen/job_form_text_size"
+                    android:inputType="number"
+                    android:maxLines="1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/education"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_rect02"
+                    android:layout_marginTop="-1dp"
+                    android:paddingTop="@dimen/text_layout_paddin_top"
+                    app:errorEnabled="true"
+                    app:hintTextAppearance="@style/CustomTextAppearance"
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                        android:paddingTop="@dimen/editTextPaddingTop"
+                        android:hint="@string/education"
+                        android:textSize="@dimen/job_form_text_size"
+                        android:inputType="text"
+                        android:maxLines="1"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/graduation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_rect02"
+                    android:layout_marginTop="-1dp"
+                    android:layout_marginLeft="-1dp"
+                    android:paddingTop="@dimen/text_layout_paddin_top"
+                    app:errorEnabled="true"
+                    app:hintTextAppearance="@style/CustomTextAppearance"
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                        android:paddingTop="@dimen/editTextPaddingTop"
+                        android:hint="@string/graduation_year"
+                        android:textSize="@dimen/job_form_text_size"
+                        android:inputType="text"
+                        android:maxLines="1"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:hint="@string/job_title"
+                app:hintTextAppearance="@style/spinnerHint"
+                android:orientation="horizontal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/job"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textSize="@dimen/form_text_size"
+                    android:background="@drawable/shape_rect02"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_disable"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:hint="@string/visa"
+                app:hintTextAppearance="@style/spinnerHint"
+                android:orientation="horizontal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/visa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textSize="@dimen/form_text_size"
+                    android:background="@drawable/shape_rect02"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_disable"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/visaTypeParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:hint="@string/visa_type"
+                app:hintTextAppearance="@style/spinnerHint"
+                android:orientation="horizontal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/visaType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textSize="@dimen/form_text_size"
+                    android:background="@drawable/shape_rect02"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_disable"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:hint="Qualified For Work Visa"
+                app:hintTextAppearance="@style/spinnerHint"
+                android:orientation="horizontal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/visaQualified"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textSize="@dimen/form_text_size"
+                    android:background="@drawable/shape_rect02"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_disable"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/workPlace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:paddingTop="@dimen/text_layout_paddin_top"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/CustomTextAppearance"
+                app:errorTextAppearance="@style/ErrorTextAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                    android:paddingTop="@dimen/editTextPaddingTop"
+                    android:hint="@string/accepted_work_place"
+                    android:textSize="@dimen/job_form_text_size"
+                    android:inputType="text"
+                    android:maxLines="1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:hint="@string/have_been_to_china"
+                app:hintTextAppearance="@style/spinnerHint"
+                android:orientation="horizontal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/beenChina"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textSize="@dimen/form_text_size"
+                    android:background="@drawable/shape_rect02"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_disable"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/yearsInChinaparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:hint="@string/how_many_years_were_in_china"
+                app:hintTextAppearance="@style/spinnerHint"
+                android:orientation="horizontal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/yearsInChina"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textSize="@dimen/form_text_size"
+                    android:background="@drawable/shape_rect02"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_disable"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:hint="@string/work_experience"
+                app:hintTextAppearance="@style/spinnerHint"
+                android:orientation="horizontal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/experience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textSize="@dimen/form_text_size"
+                    android:background="@drawable/shape_rect02"
+                    android:enabled="false"
+                    android:textColor="@drawable/edit_text_disable"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/whenCanJoin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:paddingTop="@dimen/text_layout_paddin_top"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/CustomTextAppearance"
+                app:errorTextAppearance="@style/ErrorTextAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                    android:paddingTop="@dimen/editTextPaddingTop"
+                    android:hint="@string/when_can_join"
+                    android:textSize="@dimen/job_form_text_size"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:focusable="false"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/residence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_marginTop="-1dp"
+                android:paddingTop="@dimen/text_layout_paddin_top"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/CustomTextAppearance"
+                app:errorTextAppearance="@style/ErrorTextAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                    android:paddingTop="@dimen/editTextPaddingTop"
+                    android:hint="@string/current_residence"
+                    android:textSize="@dimen/job_form_text_size"
+                    android:inputType="text"
+                    android:maxLines="1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:textSize="@dimen/form_text_size"
+                android:text="I’m agreed that I want to find an English teaching job in China and I’m well qualified for it."/>
+
+            <Button
+                android:id="@+id/submitBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/rehan_button_height"
+                android:layout_marginVertical="@dimen/_20sdp"
+                android:background="@drawable/roundtextbackground"
+                android:textAllCaps="false"
+                android:text="@string/submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_text_size"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

@@ -4,7 +4,16 @@
     <color name="colorPrimaryDark">#1a5984</color>
     <color name="colorAccent">#1a5984</color>
     <color name="red">#bc1823</color>
-
+<color name="black">#000</color>
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="colorwhite">#fff</color>
+    <color name="colorgray01">#c9c9c9</color>
+    <color name="colorgray02">#959595</color>
+    <color name="colorblack">#000</color>
+    <color name="colorGreen">#43A047</color>
+    <color name="backrough">#E8E7E5</color>
+    <color name="colorgray00">#FFF3F2F2</color>
+    <color name="colorred">#E70808</color>
+    <color name="hintColor">#808080</color>
 </resources>

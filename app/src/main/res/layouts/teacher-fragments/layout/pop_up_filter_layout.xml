@@ -1,0 +1,189 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardViewLayoutNotif"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="@android:color/white"
+    android:layout_marginHorizontal="@dimen/_20sdp"
+    app:cardElevation="1dp"
+    app:cardCornerRadius="@dimen/_20sdp"
+    app:cardMaxElevation="0dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true"
+    android:layout_marginTop="7dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter Result"
+            android:textSize="@dimen/_20sdp"
+            android:layout_marginVertical="@dimen/_10sdp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_rect02"
+            android:layout_marginTop="-1dp"
+            android:hint="@string/nationality"
+            app:hintTextAppearance="@style/spinnerHint"
+            android:orientation="horizontal"
+            android:layout_marginVertical="@dimen/_5sdp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/nationality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="@dimen/form_text_size"
+                android:background="@drawable/shape_rect02"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_rect02"
+            android:layout_marginTop="-1dp"
+            android:hint="@string/job_type"
+            app:hintTextAppearance="@style/spinnerHint"
+            android:orientation="horizontal"
+            android:layout_marginVertical="@dimen/_5sdp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/jobtype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="@dimen/form_text_size"
+                android:background="@drawable/shape_rect02"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_rect02"
+            android:layout_marginTop="-1dp"
+            android:hint="@string/gender"
+            app:hintTextAppearance="@style/spinnerHint"
+            android:orientation="horizontal"
+            android:layout_marginVertical="@dimen/_5sdp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textSize="@dimen/form_text_size"
+                android:background="@drawable/shape_rect02"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_rect02"
+            android:layout_marginTop="10dp"
+            android:paddingTop="@dimen/text_layout_paddin_top"
+            app:errorEnabled="true"
+            app:hintTextAppearance="@style/CustomTextAppearance"
+            app:errorTextAppearance="@style/ErrorTextAppearance">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                android:paddingTop="@dimen/editTextPaddingTop"
+                android:hint="Location"
+                android:textSize="@dimen/job_form_text_size"
+                android:inputType="text"
+                android:maxLines="1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/p"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prize"
+                android:textSize="@dimen/_20sdp"
+                android:layout_margin="@dimen/_5sdp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/min"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_below="@id/p"
+                android:layout_marginTop="-1dp"
+                android:paddingTop="@dimen/text_layout_paddin_top"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/CustomTextAppearance"
+                app:errorTextAppearance="@style/ErrorTextAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                    android:paddingTop="@dimen/editTextPaddingTop"
+                    android:hint="min"
+                    android:textSize="@dimen/job_form_text_size"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:maxLength="2"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/max"
+                android:layout_toRightOf="@id/min"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rect02"
+                android:layout_below="@id/p"
+                android:layout_marginTop="-1dp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:paddingTop="@dimen/text_layout_paddin_top"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/CustomTextAppearance"
+                app:errorTextAppearance="@style/ErrorTextAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
+                    android:paddingTop="@dimen/editTextPaddingTop"
+                    android:hint="max"
+                    android:textSize="@dimen/job_form_text_size"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:maxLength="2"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

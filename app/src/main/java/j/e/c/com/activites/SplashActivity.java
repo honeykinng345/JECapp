@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -44,8 +45,6 @@ public class SplashActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
 
                 logoSplash.setAnimation(anim2);
-
-
                 companyName.setAnimation(anim3);
 
                 companyName.setVisibility(View.VISIBLE);
@@ -60,39 +59,25 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-
-
-                        finish();
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            finish();
+                        }, 1500);
 
                     }
-
 
                     @Override
                     public void onAnimationRepeat(Animation animation) {
 
                     }
                 });
-
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
 
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     private void init() {
@@ -103,15 +88,9 @@ public class SplashActivity extends AppCompatActivity {
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
 
-
-        anim1 = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
+        anim1 = AnimationUtils.loadAnimation(getBaseContext(), R.anim.scale);
         anim2 = AnimationUtils.loadAnimation(getBaseContext(), R.anim.fadeout);
         anim3 = AnimationUtils.loadAnimation(getBaseContext(), R.anim.fadein);
-
-
-
-
     }
-
 
 }

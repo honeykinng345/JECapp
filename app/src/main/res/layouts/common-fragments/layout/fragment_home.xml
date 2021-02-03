@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:id="@+id/topBar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="19dp"
+        android:background="@color/white">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="40dp"
+            android:background="@drawable/roundedborder">
+
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="10dp"
+                android:src="@drawable/ic_search"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/search_icon"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:text="Search"
+                android:textColor="#000"/>
+
+
+
+            <TextView
+                android:id="@+id/goText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:text="GO"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:paddingVertical="6dp"
+                android:paddingHorizontal="15dp"
+                android:background="@drawable/roundtextbackground"/>
+
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <com.denzcoskun.imageslider.ImageSlider
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        app:iss_auto_cycle="true"
+        app:iss_delay="0"
+        app:iss_period="2500"
+        android:id="@+id/slider"
+        android:layout_below="@+id/topBar"
+        app:iss_selected_dot="@drawable/transparentdot"
+        app:iss_unselected_dot="@drawable/transparentdot">
+
+    </com.denzcoskun.imageslider.ImageSlider>
+
+
+    <LinearLayout
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:foreground="@color/white"
+        android:layout_below="@id/slider"
+        android:orientation="vertical"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/empty"
+        android:gravity="center"
+        android:elevation="2dp">
+
+        <ImageView
+            android:id="@+id/homeLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_presentation" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/jec_teachers"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:gravity="center"/>
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

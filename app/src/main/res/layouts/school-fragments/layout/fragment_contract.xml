@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/shape_react01"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:elevation="@dimen/_1sdp">
+
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_baseline_navigate_before_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/backArrow"
+            android:layout_centerVertical="true"
+            android:text="Contract"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:id="@+id/download"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:elevation="@dimen/_1sdp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_cloud_download_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Download Contract"
+                android:textSize="@dimen/job_list_text_size"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <!--license -->
+
+    <com.denzcoskun.imageslider.ImageSlider
+        android:id="@+id/contractImages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/payment"
+        android:layout_below="@id/toolBar"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginVertical="@dimen/_30sdp"
+        android:tag="images"
+        app:iss_auto_cycle="false" />
+
+    <LinearLayout
+        android:id="@+id/mmmm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/submit"
+        android:layout_marginHorizontal="@dimen/_30sdp"
+        android:layout_marginVertical="@dimen/_20sdp"
+        android:weightSum="5"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Upload Contract Here"
+            android:textSize="@dimen/form_text_size"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/upload"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="1"
+            android:background="@drawable/roundtextbackground"
+            android:text="@string/upload"
+            android:textSize="@dimen/button_text_size_small"
+            android:textColor="@color/white"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/mmmm"
+        android:layout_marginHorizontal="@dimen/_30sdp"
+        android:weightSum="5"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Upload Payment Screenshot"
+            android:textSize="@dimen/form_text_size"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/paymentbtn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="1"
+            android:background="@drawable/roundtextbackground"
+            android:text="@string/upload"
+            android:textSize="@dimen/button_text_size_small"
+            android:textColor="@color/white"/>
+
+        <ImageView
+            android:id="@+id/paymentImg"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/rehan_button_height"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:layout_marginHorizontal="@dimen/_50sdp"
+        android:background="@drawable/roundtextbackground"
+        android:textAllCaps="false"
+        android:text="Submit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/button_text_size"
+        android:paddingHorizontal="@dimen/_15sdp"/>
+
+</RelativeLayout>
