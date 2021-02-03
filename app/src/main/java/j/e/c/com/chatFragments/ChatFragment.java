@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.request.StringRequest;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -39,10 +40,10 @@ import j.e.c.com.chatFragments.models.Message;
 public class ChatFragment extends Fragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-   Message msg;
-   ArrayList<Message> messageArrayList;
-   ChatAdapter chatAdapter;
-   Gson  gson;
+    Message msg;
+    ArrayList<Message> messageArrayList;
+    ChatAdapter chatAdapter;
+    Gson gson;
 
     @BindView(R.id.sendBtn)
     ImageView sendBtn;
@@ -54,7 +55,7 @@ public class ChatFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_fragment, container, false);
         ButterKnife.bind(this, view);
-        gson= new Gson();
+        gson = new Gson();
 
         return view;
 
@@ -62,7 +63,7 @@ public class ChatFragment extends Fragment {
 
 
     private void getMessages() {
-  messageArrayList.clear();
+        messageArrayList.clear();
         String tag_string_req = "req_login";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, appConfig.URL_getAllMessages,
                 response -> {
@@ -94,13 +95,13 @@ public class ChatFragment extends Fragment {
                         //so here we are getting that json array
                     } catch (JSONException e) {
                         e.printStackTrace();
-                       // progressDialog.dismiss();
+                        // progressDialog.dismiss();
                     }
                 },
                 error -> {
                     Toast.makeText(getActivity(),
                             error.getMessage(), Toast.LENGTH_LONG).show();
-                   // progressDialog.dismiss();
+                    // progressDialog.dismiss();
                     // spinKitView.setVisibility(View.GONE);
                 }) {
             @Override
@@ -117,13 +118,14 @@ public class ChatFragment extends Fragment {
     }
 
     String tag_string_req = "req_login";
+
     private void SendData() {
         String m = message.getText().toString().trim();
 
-        if (m.isEmpty()){
-            Toast.makeText(getActivity(),"Not Send Empty Message",Toast.LENGTH_LONG).show();
+        if (m.isEmpty()) {
+            Toast.makeText(getActivity(), "Not Send Empty Message", Toast.LENGTH_LONG).show();
             return;
-        }else{
+        } else {
             StringRequest strReq = new StringRequest(Request.Method.POST,
                     appConfig.URL_chat_message, response -> {
                 // Toast.makeText(getActivity(),"ok"+response,Toast.LENGTH_LONG).show();
@@ -138,7 +140,7 @@ public class ChatFragment extends Fragment {
 
                         message.setText(null);
                         // user successfully logged in
-                        Toast.makeText(getActivity(),"ok",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "ok", Toast.LENGTH_LONG).show();
 
 
                     }
@@ -159,10 +161,10 @@ public class ChatFragment extends Fragment {
                 protected Map<String, String> getParams() {
                     // Posting parameters to login url
                     Map<String, String> params = new HashMap<>();
-                    params.put("id",Helper.fetchUserId(getContext()));
+                    params.put("id", Helper.fetchUserId(getContext()));
                     params.put("message", m);
-                    params.put("admin",Helper.AdminId);
-                    params.put("frm","u");
+                    params.put("admin", Helper.AdminId);
+                    params.put("frm", "u");
                     return params;
                 }
 
@@ -181,7 +183,7 @@ public class ChatFragment extends Fragment {
         messageArrayList = new ArrayList<>();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, true);
-       // linearLayoutManager.setStackFromEnd(false);
+        // linearLayoutManager.setStackFromEnd(false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         sendBtn.setOnClickListener(v -> {
@@ -194,10 +196,31 @@ public class ChatFragment extends Fragment {
         getMessages();
     }
 
-    @OnClick(R.id.backArrow)
-    public void onViewClicked() {
-        getFragmentManager().popBackStack();
+
+    void OpenBottomNav() {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+        //infilate view For Bottom Sheet
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.bottom_navigsation_chat, null);
+        bottomSheetDialog.setContentView(view);
+
+       /* Button dealsBtn,redeemBtn,reviews;
+        dealsBtn = view.findViewById(R.id.dealsBtn);
+        redeemBtn = view.findViewById(R.id.redeemBtn);
+        reviews = view.findViewById(R.id.reviews);*/
+        bottomSheetDialog.show();
+
     }
 
-
+    @OnClick({R.id.backArrow, R.id.plusBtn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.backArrow:
+                getFragmentManager().popBackStack();
+                break;
+            case R.id.plusBtn:
+                OpenBottomNav();
+                break;
+        }
+    }
 }

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navView = findViewById(R.id.nav_view);
-sessionManager = new SessionManager(getApplicationContext());
+        sessionManager = new SessionManager(getApplicationContext());
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
        // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TeacherShowingJobsFragment()).commit();
 

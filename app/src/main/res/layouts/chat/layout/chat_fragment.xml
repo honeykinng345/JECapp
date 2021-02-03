@@ -57,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_5sdp"
         android:paddingVertical="@dimen/_5sdp"
         android:gravity="center_vertical">
 
@@ -78,10 +78,21 @@
             android:id="@+id/sendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/plusBtn"
+            android:layout_marginRight="@dimen/_4ssp"
             android:layout_centerVertical="true"
             android:padding="@dimen/_7sdp"
             android:src="@drawable/ic_baseline_send_24"
+            android:background="@drawable/roundtextbackground"/>
+
+        <ImageView
+            android:id="@+id/plusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_7sdp"
+            android:src="@drawable/ic_baseline_add_circle_outline_24"
             android:background="@drawable/roundtextbackground"/>
 
     </RelativeLayout>
