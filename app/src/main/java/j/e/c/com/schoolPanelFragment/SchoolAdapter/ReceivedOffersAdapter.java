@@ -146,17 +146,11 @@ public class ReceivedOffersAdapter extends RecyclerView.Adapter<ReceivedOffersAd
                     }
                 });
                 break;
-
             case "5":
-              /*  holder.accept.setVisibility(View.GONE);
-                holder.reject.setText("Rejected");*/
-                holder.accept.setVisibility(View.VISIBLE);
+                holder.accept.setVisibility(View.GONE);
                 holder.reject.setVisibility(View.GONE);
-                holder.accept.setText("Pending");
-
-                holder.offer.setText("Chat");
+                holder.offer.setText(R.string.chat);
                 holder.offer.setOnClickListener(v -> Helper.fragmentTransaction(context, new ChatFragment()));
-
                 break;
         }
 

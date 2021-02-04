@@ -22,6 +22,7 @@ import j.e.c.com.Models.School;
 import j.e.c.com.Others.Helper;
 import j.e.c.com.R;
 import j.e.c.com.SQLiteHandler;
+import j.e.c.com.chatFragments.ChatFragment;
 import j.e.c.com.commonFragments.NotificationFragment;
 import j.e.c.com.commonFragments.ScheduledInterviewsFragment;
 import j.e.c.com.schoolPanelFragment.HireFormTwoFragment;
@@ -90,7 +91,6 @@ public class teacherAppliedJobAdapter extends RecyclerView.Adapter<teacherApplie
                 holder.chat.setVisibility(View.VISIBLE);
                 holder.chat.setText("Inteview Link");
                 holder.chat.setOnClickListener(v -> Helper.fragmentTransaction(currentFragment,new NotificationFragment()));
-
                 break;
             case "4":
                 holder.btnApplay.setText("Accept");
@@ -98,9 +98,11 @@ public class teacherAppliedJobAdapter extends RecyclerView.Adapter<teacherApplie
                 holder.chat.setVisibility(View.VISIBLE);
                 holder.chat.setText("");
                 holder.chat.setOnClickListener(v -> Helper.fragmentTransaction(currentFragment,new NotificationFragment()));
-
                 break;
-
+            case "5":
+                holder.btnApplay.setVisibility(View.GONE);
+                holder.chat.setVisibility(View.VISIBLE);
+                holder.chat.setOnClickListener(v -> Helper.fragmentTransaction(currentFragment, new ChatFragment()));
         }
 
     }
