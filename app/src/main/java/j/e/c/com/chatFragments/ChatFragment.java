@@ -1,21 +1,25 @@
 package j.e.c.com.chatFragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.request.StringRequest;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 
@@ -38,17 +42,24 @@ import j.e.c.com.appConfig;
 import j.e.c.com.chatFragments.models.Message;
 
 public class ChatFragment extends Fragment {
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-    Message msg;
+
     ArrayList<Message> messageArrayList;
     ChatAdapter chatAdapter;
     Gson gson;
+    Message msg;
 
-    @BindView(R.id.sendBtn)
-    ImageView sendBtn;
-    @BindView(R.id.message)
+    View mCustomBottomSheet;
+    BottomSheetBehavior mBottomSheetBehavior;
+
     EditText message;
+    ImageView sendBtn, otherBtn;
+
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+   /* @BindView(R.id.message)
+    EditText message;*/
+    @BindView(R.id.messageBar)
+    CoordinatorLayout messageBar;
 
     @Nullable
     @Override
@@ -57,8 +68,11 @@ public class ChatFragment extends Fragment {
         ButterKnife.bind(this, view);
         gson = new Gson();
 
-        return view;
+        mCustomBottomSheet = view.findViewById(R.id.custom_bottom_sheet);
+        mBottomSheetBehavior = BottomSheetBehavior.from(mCustomBottomSheet);
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
+        return view;
     }
 
 
@@ -180,18 +194,26 @@ public class ChatFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        message = mCustomBottomSheet.findViewById(R.id.message);
+        sendBtn = mCustomBottomSheet.findViewById(R.id.sendBtn);
+        otherBtn = mCustomBottomSheet.findViewById(R.id.other_options);
+
+        sendBtn.setOnClickListener(v -> SendData());
+
+        otherBtn.setOnClickListener(v -> {
+            if(mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED){
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            } else {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+
         messageArrayList = new ArrayList<>();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, true);
         // linearLayoutManager.setStackFromEnd(false);
         recyclerView.setLayoutManager(linearLayoutManager);
-
-        sendBtn.setOnClickListener(v -> {
-
-            SendData();
-
-
-        });
 
         getMessages();
     }
@@ -212,14 +234,11 @@ public class ChatFragment extends Fragment {
 
     }
 
-    @OnClick({R.id.backArrow, R.id.plusBtn})
+    @OnClick({R.id.backArrow})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backArrow:
                 getFragmentManager().popBackStack();
-                break;
-            case R.id.plusBtn:
-                OpenBottomNav();
                 break;
         }
     }
