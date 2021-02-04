@@ -60,6 +60,8 @@ public class JobFormFragment extends Fragment {
 
     @BindView(R.id.nationality)
     AppCompatAutoCompleteTextView nationality;
+    @BindView(R.id.workPlace)
+    AppCompatAutoCompleteTextView workPlace;
     @BindView(R.id.visa)
     AppCompatAutoCompleteTextView visa;
     @BindView(R.id.visaType)
@@ -94,8 +96,6 @@ public class JobFormFragment extends Fragment {
     Button submitBtn;
     @BindView(R.id.age)
     TextInputLayout age;
-    @BindView(R.id.workPlace)
-    TextInputLayout workPlace;
     @BindView(R.id.whenCanJoin)
     TextInputLayout whenCanJoin;
     @BindView(R.id.visaQualified)
@@ -137,7 +137,7 @@ public class JobFormFragment extends Fragment {
         visa.setText(teacher.getVisa());
         visaType.setText(teacher.getVisatype());
         visaQualified.setText(teacher.getQFWV());
-        workPlace.getEditText().setText(teacher.getWorkplace());
+        workPlace.setText(teacher.getWorkplace());
         beenChina.setText(teacher.getFromchina());
         yearsInChina.setText(teacher.getYearinchina());
         experience.setText(teacher.getWorkexperince());
@@ -158,7 +158,7 @@ public class JobFormFragment extends Fragment {
         visaType.setEnabled(false);
         visa.setEnabled(false);
         visaQualified.setEnabled(false);
-        workPlace.getEditText().setEnabled(false);
+        workPlace.setEnabled(false);
         beenChina.setEnabled(false);
         yearsInChina.setEnabled(false);
         experience.setEnabled(false);
@@ -172,6 +172,7 @@ public class JobFormFragment extends Fragment {
         super.onResume();
 
         nationality.setAdapter(Helper.getSimpleSpinnerAdapter(R.array.nationalityArray, getContext()));
+        workPlace.setAdapter(Helper.getSimpleSpinnerAdapter(R.array.chineseCities, getContext()));
         gender.setAdapter(Helper.getSimpleSpinnerAdapter(R.array.genderArray, getContext()));
         job.setAdapter(Helper.getSimpleSpinnerAdapter(R.array.jobArray, getContext()));
         beenChina.setAdapter(Helper.getSimpleSpinnerAdapter(R.array.yesNoArray, getContext()));
@@ -230,7 +231,7 @@ public class JobFormFragment extends Fragment {
 
                     }
                     teacher.setQFWV(visaQualified.getText().toString());
-                    teacher.setWorkplace(workPlace.getEditText().getText().toString());
+                    teacher.setWorkplace(workPlace.getText().toString());
                     teacher.setFromchina(beenChina.getText().toString());
                     if (TextUtils.equals(beenChina.getText().toString(), "Yes")) {
                         teacher.setYearinchina(yearsInChina.getText().toString());
@@ -242,11 +243,7 @@ public class JobFormFragment extends Fragment {
                     teacher.setCurrentworkplace(residence.getEditText().getText().toString());
                     SendData();
                 }
-
-
                 break;
-
-
             case R.id.whenCanJoin:
                 Helper.setDate(whenCanJoin);
                 break;
@@ -261,7 +258,6 @@ public class JobFormFragment extends Fragment {
         progressDialog.setTitle("Please Wait..");
         progressDialog.setMessage("Please Wait We Are Uploading Your Data");
         progressDialog.show();
-
 
         uploadFileToFireBase(Uri.parse(teacher.getVideo()));
         String tag_string_req = "req_login";
@@ -503,9 +499,6 @@ public class JobFormFragment extends Fragment {
                 //  params.put("name", teacher.getName());
 
 
-
-
-
 /*     params.put("file", teacher.getFile());
                 params.put("video", teacher.getVideo());
                 params.put("name", teacher.getName());
@@ -527,16 +520,10 @@ public class JobFormFragment extends Fragment {
                 params.put("FutherJoinDate", teacher.getFutherjoindate());
                 params.put("currentResidence", teacher.getCurrentresidence());
                 params.put("status", teacher.getStatus());
-
             */
-
                 return params;
             }
-
-
         };
-
         AppController.getInstance().addToRequestQueue(stringRequest, tag_string_req);
-
     }
 }

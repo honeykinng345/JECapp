@@ -366,26 +366,22 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/workPlace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_rect02"
                 android:layout_marginTop="-1dp"
-                android:paddingTop="@dimen/text_layout_paddin_top"
-                app:errorEnabled="true"
-                app:hintTextAppearance="@style/CustomTextAppearance"
-                app:errorTextAppearance="@style/ErrorTextAppearance">
+                android:hint="@string/accepted_work_place"
+                app:hintTextAppearance="@style/spinnerHint"
+                android:orientation="horizontal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/workPlace"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:layout_marginHorizontal="@dimen/editText_marginHorizontal"
-                    android:paddingTop="@dimen/editTextPaddingTop"
-                    android:hint="@string/accepted_work_place"
-                    android:textSize="@dimen/job_form_text_size"
-                    android:inputType="text"
-                    android:maxLines="1"/>
+                    android:textSize="@dimen/form_text_size"
+                    android:background="@drawable/shape_rect02"
+                    android:textColor="@color/black"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
