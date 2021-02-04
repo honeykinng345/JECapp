@@ -128,9 +128,9 @@ public class ReceivedOffersAdapter extends RecyclerView.Adapter<ReceivedOffersAd
                 });
                 break;
 
-            case "4":
-              /*  holder.accept.setVisibility(View.GONE);
-                holder.reject.setText("Rejected");*/
+        /*    case "4":
+              *//*  holder.accept.setVisibility(View.GONE);
+                holder.reject.setText("Rejected");*//*
                 holder.accept.setVisibility(View.VISIBLE);
                 holder.reject.setVisibility(View.VISIBLE);
                 holder.accept.setText("Accpet");
@@ -145,8 +145,8 @@ public class ReceivedOffersAdapter extends RecyclerView.Adapter<ReceivedOffersAd
 
                     }
                 });
-                break;
-            case "5":
+                break;*/
+            case "4":
                 holder.accept.setVisibility(View.GONE);
                 holder.reject.setVisibility(View.GONE);
                 holder.offer.setText(R.string.chat);

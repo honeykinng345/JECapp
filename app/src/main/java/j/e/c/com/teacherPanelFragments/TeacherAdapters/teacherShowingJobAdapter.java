@@ -38,7 +38,7 @@ import j.e.c.com.SQLiteHandler;
 import j.e.c.com.appConfig;
 import j.e.c.com.schoolPanelFragment.HireFormTwoFragment;
 import j.e.c.com.teacherPanelFragments.AppliedJobsFragment;
-//import com.android.volley.toolbox.StringRequest;
+
 
 
 public class teacherShowingJobAdapter extends RecyclerView.Adapter<teacherShowingJobAdapter.HolderJobs> {

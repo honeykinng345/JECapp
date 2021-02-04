@@ -107,7 +107,6 @@ SessionManager sessionManager ;
                 throw new IllegalStateException("Unexpected value: " + view.getId());
         }
     }
-
     private void isSchoolJobExsist() {
 
         progressDialog.show();
@@ -174,7 +173,6 @@ SessionManager sessionManager ;
         //adding our stringrequest to queue
         AppController.getInstance().addToRequestQueue(stringRequest, tag_string_req);
     }
-
     private void fetchUserId() {
         Cursor res = sqLiteHandler.getAllData();
         while (res.moveToNext()) {
@@ -182,7 +180,6 @@ SessionManager sessionManager ;
 ///Toast.makeText(getContext(),""+id,Toast.LENGTH_LONG).show();
         }
     }
-
     private void TistecherJobExsist() {
         progressDialog.show();
         String tag_string_req = "req_login";

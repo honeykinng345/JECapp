@@ -1,11 +1,7 @@
 package j.e.c.com;
 
 public class appConfig {
-
-
-    public  static  String Main_url = "http://jeccompany.ml/android_login_api/";
-
-    //public  static  String main_Url = "https://websitejec1.000webhostapp.com/";
+    public static  String Main_url = "http://jeccompany.ml/android_login_api/";
     public static String URL_PhoneValidate = Main_url+"phoneValid.php";
     public static String URL_regsiter = Main_url+"register.php";
     public static String URL_loginPhone = Main_url+"login.php";
@@ -35,11 +31,7 @@ public class appConfig {
     public static String URL_chat_message ="http://jeccompany.ml/android_login_api/chat.php";
     public static String URL_updateApplayTableRow ="http://jeccompany.ml/android_login_api/updateApplayTableRow.php";
     public static String URL_SchoolAcceptTeacherAfterInterViewStatusUpdate ="http://jeccompany.ml/android_login_api/SchoolAcceptTeacherAfterInterViewStatusUpdate.php";
-
-
-
-
     // images  URL ...
-    public  static  String URL_MAIN_IMAGES= "http://jeccompany.ml";
+    public static  String URL_MAIN_IMAGES= "http://jeccompany.ml";
     public static String URL_TEACHERS_IMGAES =URL_MAIN_IMAGES+"/bpic/";
 }

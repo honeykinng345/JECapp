@@ -70,7 +70,7 @@ public class TeacherApplyFragment extends Fragment {
     ImageView video;
 
     private Bitmap bitmap;
-    String test;
+   // String test;
     boolean seflToogle = false;
     @BindView(R.id.agentSpinner)
     AppCompatAutoCompleteTextView agentSpinner;
@@ -92,14 +92,13 @@ public class TeacherApplyFragment extends Fragment {
     TextView self;
     @BindView(R.id.agentSpinerParent)
     TextInputLayout agentSpinerParent;
-
     Teacher teacher = Helper.getTeacher();
     Teacher2 t2 = Helper.getTeacher2();
     @BindView(R.id.cvTextView)
     TextView cvTextView;
     @BindView(R.id.videoTextView)
     TextView videoTextView;
-    ProgressDialog progressDialog;
+   // ProgressDialog progressDialog;
     public static int VIDEO_REQUEST_CODE = 200;
     SQLiteHandler sqLiteHandler;
 
@@ -338,7 +337,7 @@ public class TeacherApplyFragment extends Fragment {
         Helper.fill(wechat);
     }
 
-    private void SendData() {
+   /* private void SendData() {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setTitle("Please Wait..");
@@ -400,7 +399,7 @@ public class TeacherApplyFragment extends Fragment {
 
 
 
-/*     params.put("file", teacher.getFile());
+*//*     params.put("file", teacher.getFile());
                 params.put("video", teacher.getVideo());
                 params.put("name", teacher.getName());
                 params.put("age", teacher.getAge());
@@ -422,7 +421,7 @@ public class TeacherApplyFragment extends Fragment {
                 params.put("currentResidence", teacher.getCurrentresidence());
                 params.put("status", teacher.getStatus());
 
-            */
+            *//*
                 return params;
             }
 
@@ -431,7 +430,7 @@ public class TeacherApplyFragment extends Fragment {
         AppController.getInstance().addToRequestQueue(stringRequest, tag_string_req);
 
 
-    }
+    }*/
 
 
 }

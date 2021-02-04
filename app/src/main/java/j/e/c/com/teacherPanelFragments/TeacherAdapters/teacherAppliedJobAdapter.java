@@ -92,14 +92,14 @@ public class teacherAppliedJobAdapter extends RecyclerView.Adapter<teacherApplie
                 holder.chat.setText("Inteview Link");
                 holder.chat.setOnClickListener(v -> Helper.fragmentTransaction(currentFragment,new NotificationFragment()));
                 break;
-            case "4":
+           /* case "4":
                 holder.btnApplay.setText("Accept");
                 //holder.btnApplay.setOnClickListener(v -> Helper.fragmentTransaction(currentFragment, new ScheduledInterviewsFragment(school.getId())));
                 holder.chat.setVisibility(View.VISIBLE);
                 holder.chat.setText("");
                 holder.chat.setOnClickListener(v -> Helper.fragmentTransaction(currentFragment,new NotificationFragment()));
-                break;
-            case "5":
+                break;*/
+            case "4":
                 holder.btnApplay.setVisibility(View.GONE);
                 holder.chat.setVisibility(View.VISIBLE);
                 holder.chat.setOnClickListener(v -> Helper.fragmentTransaction(currentFragment, new ChatFragment()));
