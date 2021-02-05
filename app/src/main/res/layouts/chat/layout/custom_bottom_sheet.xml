@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="62dp"
+    app:behavior_peekHeight="55dp"
     android:orientation="vertical"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -65,82 +65,97 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="4"
-         android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_3sdp"
         android:orientation="horizontal">
-        <ImageView
-            android:layout_weight="1"
-            android:id="@+id/imageView5"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_2sdp"
-            android:layout_marginVertical="@dimen/_2sdp"
-            android:src="@drawable/logo"
-              />
-        <ImageView
-            android:layout_weight="1"
-            android:id="@+id/imageView6"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_2sdp"
-            android:layout_marginVertical="@dimen/_2sdp"
-            android:src="@drawable/logo"/>
-        <ImageView
-            android:layout_weight="1"
-            android:id="@+id/imageView7"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_2sdp"
-            android:layout_marginVertical="@dimen/_2sdp"
-            android:src="@drawable/logo"/>
-        <ImageView
-            android:layout_weight="1"
-            android:id="@+id/imageView8"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_2sdp"
-            android:layout_marginVertical="@dimen/_2sdp"
-            android:src="@drawable/logo"/>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="4"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
 
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_weight="1"
-            android:id="@+id/imageView1"
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_bsheet_accept"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Accept"
+                        android:textSize="@dimen/bottom_sheet_text_size"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_2sdp"
-            android:layout_marginVertical="@dimen/_2sdp"
-            android:src="@drawable/logo"
-            />
-        <ImageView
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/imageView2"
+            android:orientation="vertical"
+            android:gravity="center">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_bsheet_reject"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reject"
+                android:textSize="@dimen/bottom_sheet_text_size"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_2sdp"
-            android:layout_marginVertical="@dimen/_2sdp"
-            android:src="@drawable/logo"/>
-        <ImageView
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/imageView3"
+            android:orientation="vertical"
+            android:gravity="center">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_bsheet_reinterview"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Re Interview"
+                android:textSize="@dimen/bottom_sheet_text_size"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_2sdp"
-            android:layout_marginVertical="@dimen/_2sdp"
-            android:src="@drawable/logo"/>
-        <ImageView
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/imageView4"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_2sdp"
-            android:layout_marginVertical="@dimen/_2sdp"
-            android:src="@drawable/logo"/>
+            android:orientation="vertical"
+            android:gravity="center">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_bsheet_benifits"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Benefits"
+                android:textSize="@dimen/bottom_sheet_text_size"/>
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
