@@ -108,6 +108,9 @@ private  String id;
             submitBtn.setVisibility(View.GONE);
             fillForm(school);
         }
+
+        Helper.onBackPressedInFragment(this);
+
     }
 
     private void fetchSchoolId() {
@@ -124,8 +127,7 @@ private  String id;
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backArrow:
-                assert getFragmentManager() != null;
-                getFragmentManager().popBackStack();
+                Helper.goBackFromFragment(this);
                 break;
             case R.id.submitBtn:
                 if (validateFields())

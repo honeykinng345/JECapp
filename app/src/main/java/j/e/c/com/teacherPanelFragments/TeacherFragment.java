@@ -85,10 +85,6 @@ SessionManager sessionManager ;
        }else{
            Helper.fragmentTransaction(this, new DummyListingFragment());
        }
-
-
-
-
                 break;
             case R.id.hireBtn:
                 if (sessionManager.isLoggedIn()){

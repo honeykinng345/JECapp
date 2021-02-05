@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +85,13 @@ public class HireFormOneFragment extends Fragment {
         super.onResume();
         agentSpinner.setAdapter(Helper.getSimpleSpinnerAdapter(R.array.agentArray, getContext()));
         schoolLocationSpinner.setAdapter(Helper.getSimpleSpinnerAdapter(R.array.workSpace, getContext()));
+
+        Helper.onBackPressedInFragment(this);
+
     }
+
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -131,11 +138,12 @@ public class HireFormOneFragment extends Fragment {
         }
     }
 
+
     @OnClick({R.id.backArrow, R.id.self, R.id.licensebtn, R.id.camera, R.id.fillBtn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backArrow:
-                getFragmentManager().popBackStack();
+                Helper.goBackFromFragment(this);
                 break;
             case R.id.self:
                 if (!seflToogle) {

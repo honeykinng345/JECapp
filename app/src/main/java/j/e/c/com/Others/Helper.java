@@ -21,6 +21,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
@@ -71,6 +72,7 @@ import j.e.c.com.Models.Teacher;
 import j.e.c.com.R;
 import j.e.c.com.SQLiteHandler;
 import j.e.c.com.appConfig;
+import j.e.c.com.schoolPanelFragment.HireFormOneFragment;
 
 import static android.media.tv.TvTrackInfo.TYPE_VIDEO;
 
@@ -469,5 +471,32 @@ public  static  boolean isTeacherComeFromAdapter= false;
         AppController.getInstance().addToRequestQueue(stringRequest, tag_string_req);
     }
 
+    public static void onBackPressedInFragment(Fragment fragment){
+
+        View view = fragment.getView();
+
+        if(view == null){
+            return;
+        }
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    // handle back button's click listener
+                    goBackFromFragment(fragment);
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    public static void goBackFromFragment(Fragment fragment){
+        fragment.getFragmentManager().popBackStack();
+        fragment.getFragmentManager().beginTransaction().remove(fragment).commit();
+    }
 
 }
