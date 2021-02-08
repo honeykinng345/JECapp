@@ -54,11 +54,9 @@ public class RecruitmentFragment extends Fragment {
                 break;
             case R.id.apply:
                 TistecherJobExsist();
-
                 break;
             case R.id.hire:
                 isSchoolPositionExsisit();
-
                 break;
         }
     }

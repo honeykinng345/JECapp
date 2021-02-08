@@ -16,6 +16,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -301,6 +304,41 @@ public  static  boolean isTeacherComeFromAdapter= false;
     public static void Toast(Context context, String message) {
 
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
+    public static boolean areYouSure(Context context, String message){
+
+        final boolean[] result = new boolean[1];
+        final Handler handler = new Handler()
+        {
+            @Override
+            public void handleMessage(Message mesg)
+            {
+                throw new RuntimeException();
+            }
+        };
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setTitle(message);
+
+        alert.setPositiveButton("OK", (dialog, whichButton) -> {
+            //What ever you want to do with the value
+            result[0] = true;
+            handler.sendMessage(handler.obtainMessage());
+        });
+
+        alert.setNegativeButton("CANCEL", (dialog, whichButton) -> {
+            // what ever you want to do with No option.
+            result[0] = false;
+            handler.sendMessage(handler.obtainMessage());
+        });
+
+        alert.show();
+
+        try{ Looper.loop(); }
+        catch(RuntimeException e){}
+
+        return result[0];
     }
 
     public static void popUpEditText(TextView targetView, String title){

@@ -50,12 +50,10 @@ public class ChatFragment extends Fragment {
     BottomSheetBehavior mBottomSheetBehavior;
 
     EditText message;
-    ImageView sendBtn, otherBtn;
+    ImageView sendBtn, otherBtn, acceptBtn, rejectBtn, reInterviewBtn;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-   /* @BindView(R.id.message)
-    EditText message;*/
     @BindView(R.id.messageBar)
     CoordinatorLayout messageBar;
 
@@ -196,9 +194,11 @@ public class ChatFragment extends Fragment {
         message = mCustomBottomSheet.findViewById(R.id.message);
         sendBtn = mCustomBottomSheet.findViewById(R.id.sendBtn);
         otherBtn = mCustomBottomSheet.findViewById(R.id.other_options);
+        acceptBtn = mCustomBottomSheet.findViewById(R.id.acceptBtn);
+        rejectBtn = mCustomBottomSheet.findViewById(R.id.rejectBtn);
+        reInterviewBtn = mCustomBottomSheet.findViewById(R.id.reInterview);
 
         sendBtn.setOnClickListener(v -> SendData());
-
         otherBtn.setOnClickListener(v -> {
             if(mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED){
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -206,6 +206,24 @@ public class ChatFragment extends Fragment {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
+        acceptBtn.setOnClickListener(v -> {
+            if(Helper.areYouSure(getContext(), "Are you sure to accept!"))
+                Helper.Toast(getContext(), "accepted");
+            else Helper.Toast(getContext(), "cencel ac");
+        });
+        rejectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        reInterviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
         messageArrayList = new ArrayList<>();
 
@@ -224,12 +242,7 @@ public class ChatFragment extends Fragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.bottom_navigsation_chat, null);
         bottomSheetDialog.setContentView(view);
 
-       /* Button dealsBtn,redeemBtn,reviews;
-        dealsBtn = view.findViewById(R.id.dealsBtn);
-        redeemBtn = view.findViewById(R.id.redeemBtn);
-        reviews = view.findViewById(R.id.reviews);*/
         bottomSheetDialog.show();
-
     }
 
     @OnClick({R.id.backArrow})

@@ -76,11 +76,27 @@
             android:gravity="center">
 
 
-                    <ImageView
-                        android:id="@+id/acceptBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_bsheet_accept"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/acceptBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_bsheet_accept"/>
+
+                <ImageView
+                    android:id="@+id/acceptNotifiy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_circle_outline_24"
+                    android:layout_marginLeft="@dimen/_21sdp"
+                    app:tint="@color/black"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -98,12 +114,29 @@
             android:orientation="vertical"
             android:gravity="center">
 
-
-            <ImageView
-                android:id="@+id/rejectBtn"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_bsheet_reject"/>
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/rejectBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_bsheet_reject"/>
+                <ImageView
+                    android:id="@+id/rejectNotifiy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_circle_outline_24"
+                    android:layout_marginLeft="@dimen/_21sdp"
+                    app:tint="@color/black"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -122,11 +155,27 @@
             android:gravity="center">
 
 
-            <ImageView
-                android:id="@+id/reInterview"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_bsheet_reinterview"/>
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/reInterview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_bsheet_reinterview"/>
+                <ImageView
+                    android:id="@+id/reInterviewNotifiy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_circle_outline_24"
+                    android:layout_marginLeft="@dimen/_21sdp"
+                    app:tint="@color/black"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -144,12 +193,28 @@
             android:orientation="vertical"
             android:gravity="center">
 
-
-            <ImageView
-                android:id="@+id/benefits"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_bsheet_benifits"/>
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/benefits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_bsheet_benifits"/>
+
+                <ImageView
+                    android:id="@+id/benifitsNotifiy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add_circle_outline_24"
+                    android:layout_marginLeft="@dimen/_21sdp"
+                    app:tint="@color/black"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+
 
             <TextView
                 android:layout_width="wrap_content"
