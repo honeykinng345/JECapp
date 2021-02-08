@@ -1,9 +1,13 @@
 package j.e.c.com.chatFragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -24,16 +28,21 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.security.auth.callback.CallbackHandler;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import j.e.c.com.AppController;
+import j.e.c.com.Models.School;
+import j.e.c.com.Models.Teacher;
 import j.e.c.com.Others.Helper;
 import j.e.c.com.R;
 import j.e.c.com.appConfig;
@@ -56,6 +65,7 @@ public class ChatFragment extends Fragment {
     RecyclerView recyclerView;
     @BindView(R.id.messageBar)
     CoordinatorLayout messageBar;
+
 
     @Nullable
     @Override
@@ -211,11 +221,14 @@ public class ChatFragment extends Fragment {
                 Helper.Toast(getContext(), "accepted");
             else Helper.Toast(getContext(), "cencel ac");
         });
-        rejectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        rejectBtn.setOnClickListener(v -> {
+
+            if(Helper.areYouSure(getContext(), "Are you sure want to reject!")){
+                openDialoug();
 
             }
+
+
         });
         reInterviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,6 +247,86 @@ public class ChatFragment extends Fragment {
         getMessages();
     }
 
+    private void openDialoug() {
+
+
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.row_dialoug, null);
+            EditText editText;
+            Button btnsend;
+            editText = (EditText) view.findViewById(R.id.offeredt);
+            editText.setHint("Please Write Reason");
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(70) });
+            btnsend = (Button) view.findViewById(R.id.btnsend);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setView(view);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            btnsend.setOnClickListener(v -> {
+                String whyReject = editText.getText().toString().trim();
+                if (whyReject.isEmpty()) {
+                    Toast.makeText(getActivity(), "Not Send Empty Message", Toast.LENGTH_LONG).show();
+                    return;
+                }
+               // sendData(offer, school.getId(), school.getStid(), tid);
+                SendResonForRejection(whyReject,Helper.getTeacher());
+                dialog.dismiss();
+
+
+            });
+
+
+        }
+
+
+    private void SchoolAcceptTeacherAfterInterViewStatusUpdate(Teacher teacher) {
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                appConfig.URL_SchoolAcceptTeacherAfterInterViewStatusUpdate, response -> {
+
+
+            try {
+
+                JSONObject jObj = new JSONObject(response);
+                boolean error = jObj.getBoolean("error");
+                //Toast.makeText(currentFragment.getContext(),""+response,Toast.LENGTH_LONG).show();
+                // Check for error node in json
+                if (!error) {
+                //    getMessages();
+                    Helper.Toast(getContext(),"Done");
+
+                }
+            } catch (JSONException e) {
+                // JSON error
+                Helper.Toast(getContext(),e.toString());
+
+            }
+
+        }, error -> {
+
+       Helper.Toast(getContext(),"Error");
+
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<>();
+                params.put("id",teacher.getPhone());
+                params.put("status","School Rejected");
+
+
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+
+
+
+    }
 
     void OpenBottomNav() {
 
@@ -252,5 +345,60 @@ public class ChatFragment extends Fragment {
                 Helper.goBackFromFragment(this);
                 break;
         }
+    }
+    private void SendResonForRejection(String RejectionMessage, Teacher teacher) {
+
+
+        if (RejectionMessage.isEmpty()) {
+            Toast.makeText(getActivity(), "Not Send Empty Message", Toast.LENGTH_LONG).show();
+            return;
+        } else {
+            StringRequest strReq = new StringRequest(Request.Method.POST,
+                    appConfig.URL_chat_message, response -> {
+                // Toast.makeText(getActivity(),"ok"+response,Toast.LENGTH_LONG).show();
+                try {
+                    // Toast.makeText(currentFragment.getContext(),""+response,Toast.LENGTH_LONG).show();
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    //Toast.makeText(currentFragment.getContext(),""+response,Toast.LENGTH_LONG).show();
+                    // Check for error node in json
+                    if (!error) {
+
+
+                        SchoolAcceptTeacherAfterInterViewStatusUpdate(Helper.getTeacher());
+
+
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
+                }
+
+            }, error -> {
+                Toast.makeText(getContext(),
+                        error.toString(), Toast.LENGTH_LONG).show();
+
+            }) {
+
+                @Override
+                protected Map<String, String> getParams() {
+                    // Posting parameters to login url
+                    Map<String, String> params = new HashMap<>();
+                    params.put("id", teacher.getTid());
+                    params.put("message", RejectionMessage);
+                    params.put("admin", Helper.AdminId);
+                    params.put("frm", "A");
+                    return params;
+                }
+
+            };
+            // Adding request to request queue
+            AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        }
+//Toast.makeText(currentFragment.getContext(),""+offer+jid+stid+tid,Toast.LENGTH_LONG).show();
+
+
     }
 }

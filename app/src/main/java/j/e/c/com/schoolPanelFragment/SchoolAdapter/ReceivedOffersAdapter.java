@@ -150,6 +150,7 @@ public class ReceivedOffersAdapter extends RecyclerView.Adapter<ReceivedOffersAd
                 holder.accept.setVisibility(View.GONE);
                 holder.reject.setVisibility(View.GONE);
                 holder.offer.setText(R.string.chat);
+                Helper.setTeacher(teacherArrayList.get(position));
                 holder.offer.setOnClickListener(v -> Helper.fragmentTransaction(context, new ChatFragment()));
                 break;
         }
