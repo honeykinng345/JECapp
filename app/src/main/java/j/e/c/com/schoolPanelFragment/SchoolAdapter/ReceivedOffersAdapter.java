@@ -147,11 +147,16 @@ public class ReceivedOffersAdapter extends RecyclerView.Adapter<ReceivedOffersAd
                 });
                 break;*/
             case "4":
+            case "School Rejected":
+            case "Teacher Rejected":
                 holder.accept.setVisibility(View.GONE);
                 holder.reject.setVisibility(View.GONE);
                 holder.offer.setText(R.string.chat);
                 Helper.setTeacher(teacherArrayList.get(position));
-                holder.offer.setOnClickListener(v -> Helper.fragmentTransaction(context, new ChatFragment()));
+                holder.offer.setOnClickListener(v -> {
+                    Helper.fragmentTransaction(context, new ChatFragment());
+                    Helper.isTeacherChating = false;
+                });
                 break;
         }
 

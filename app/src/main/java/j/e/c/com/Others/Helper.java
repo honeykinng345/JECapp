@@ -86,7 +86,8 @@ public class Helper {
     static Teacher2 t2;
     static ContractInfo contractInfo;
 
-public  static  boolean isTeacherComeFromAdapter= false;
+    public  static  boolean isTeacherComeFromAdapter = false;
+    public  static  boolean isTeacherChating = true;
     public static final int IMAGE_REQUEST_CODE = 100;
     public static final int VIDEO_REQUEST_CODE = 101;
     public static final int CV_REQUEST_CODE = 102;

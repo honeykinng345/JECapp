@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,21 +29,16 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.security.auth.callback.CallbackHandler;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import j.e.c.com.AppController;
-import j.e.c.com.Models.School;
-import j.e.c.com.Models.Teacher;
 import j.e.c.com.Others.Helper;
 import j.e.c.com.R;
 import j.e.c.com.appConfig;
@@ -60,6 +56,8 @@ public class ChatFragment extends Fragment {
 
     EditText message;
     ImageView sendBtn, otherBtn, acceptBtn, rejectBtn, reInterviewBtn;
+    View icons;
+    TextView rejectText;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -208,6 +206,32 @@ public class ChatFragment extends Fragment {
         rejectBtn = mCustomBottomSheet.findViewById(R.id.rejectBtn);
         reInterviewBtn = mCustomBottomSheet.findViewById(R.id.reInterview);
 
+        icons = mCustomBottomSheet.findViewById(R.id.icons);
+        rejectText = mCustomBottomSheet.findViewById(R.id.rejectText);
+
+        if (Helper.isTeacherChating)
+        {
+            if (Helper.getSchool().getContactNumber().toLowerCase().equals("teacher rejected"))
+            {
+               updateBottomSheet("You have rejected the school");
+            }
+            else if (Helper.getSchool().getContactNumber().toLowerCase().equals("school rejected"))
+            {
+                updateBottomSheet(null);
+            }
+        }
+        else
+        {
+            if (Helper.getTeacher().getPhone().toLowerCase().equals("school rejected"))
+            {
+                updateBottomSheet("You have rejected the teacher");
+            }
+            else  if (Helper.getTeacher().getPhone().toLowerCase().equals("teacher rejected"))
+            {
+                updateBottomSheet(null);
+            }
+        }
+
         sendBtn.setOnClickListener(v -> SendData());
         otherBtn.setOnClickListener(v -> {
             if(mBottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED){
@@ -225,9 +249,7 @@ public class ChatFragment extends Fragment {
 
             if(Helper.areYouSure(getContext(), "Are you sure want to reject!")){
                 openDialoug();
-
             }
-
 
         });
         reInterviewBtn.setOnClickListener(new View.OnClickListener() {
@@ -247,16 +269,22 @@ public class ChatFragment extends Fragment {
         getMessages();
     }
 
-    private void openDialoug() {
+    private void updateBottomSheet(String text) {
+        icons.setVisibility(View.GONE);
+        rejectText.setVisibility(View.VISIBLE);
+        if (text != null)
+            rejectText.setText(text);
+    }
 
+    private void openDialoug() {
 
             View view = LayoutInflater.from(getContext()).inflate(R.layout.row_dialoug, null);
             EditText editText;
             Button btnsend;
             editText = (EditText) view.findViewById(R.id.offeredt);
             editText.setHint("Please Write Reason");
-        editText.setInputType(InputType.TYPE_CLASS_TEXT);
-        editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(70) });
+            editText.setInputType(InputType.TYPE_CLASS_TEXT);
+            editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(70) });
             btnsend = (Button) view.findViewById(R.id.btnsend);
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setView(view);
@@ -269,20 +297,14 @@ public class ChatFragment extends Fragment {
                     return;
                 }
                // sendData(offer, school.getId(), school.getStid(), tid);
-                SendResonForRejection(whyReject,Helper.getTeacher());
+                SendResonForRejection(whyReject);
                 dialog.dismiss();
-
-
             });
-
-
         }
 
-
-    private void SchoolAcceptTeacherAfterInterViewStatusUpdate(Teacher teacher) {
+    private void SchoolAcceptTeacherAfterInterViewStatusUpdate() {
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 appConfig.URL_SchoolAcceptTeacherAfterInterViewStatusUpdate, response -> {
-
 
             try {
 
@@ -291,13 +313,11 @@ public class ChatFragment extends Fragment {
                 //Toast.makeText(currentFragment.getContext(),""+response,Toast.LENGTH_LONG).show();
                 // Check for error node in json
                 if (!error) {
-                //    getMessages();
-                    Helper.Toast(getContext(),"Done");
-
+                    onResume();
                 }
             } catch (JSONException e) {
                 // JSON error
-                Helper.Toast(getContext(),e.toString());
+                Helper.Toast(getContext(), "SchoolAcceptTeacherAfterInterViewStatusUpdate catch" + e.toString());
 
             }
 
@@ -311,10 +331,14 @@ public class ChatFragment extends Fragment {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<>();
-                params.put("id",teacher.getPhone());
-                params.put("status","School Rejected");
-
-
+                if (!Helper.isTeacherChating) {
+                    params.put("id", Helper.getTeacher().getPhone());
+                    params.put("status", "School Rejected");
+                }
+                else {
+                    params.put("id", Helper.getSchool().getContactNumber());
+                    params.put("status", "Teacher Rejected");
+                }
 
                 return params;
             }
@@ -346,7 +370,7 @@ public class ChatFragment extends Fragment {
                 break;
         }
     }
-    private void SendResonForRejection(String RejectionMessage, Teacher teacher) {
+    private void SendResonForRejection(String RejectionMessage) {
 
 
         if (RejectionMessage.isEmpty()) {
@@ -363,33 +387,26 @@ public class ChatFragment extends Fragment {
                     //Toast.makeText(currentFragment.getContext(),""+response,Toast.LENGTH_LONG).show();
                     // Check for error node in json
                     if (!error) {
-
-
-                        SchoolAcceptTeacherAfterInterViewStatusUpdate(Helper.getTeacher());
-
-
+                        SchoolAcceptTeacherAfterInterViewStatusUpdate();
                     }
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
                     Toast.makeText(getContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-
                 }
 
             }, error -> {
-                Toast.makeText(getContext(),
-                        error.toString(), Toast.LENGTH_LONG).show();
-
+                Helper.Toast(getContext(), "SendResonForRejection error" + error.toString());
             }) {
 
                 @Override
                 protected Map<String, String> getParams() {
                     // Posting parameters to login url
                     Map<String, String> params = new HashMap<>();
-                    params.put("id", teacher.getTid());
+                    params.put("id", Helper.fetchUserId(getContext()));
                     params.put("message", RejectionMessage);
                     params.put("admin", Helper.AdminId);
-                    params.put("frm", "A");
+                    params.put("frm", "u");
                     return params;
                 }
 
