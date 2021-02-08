@@ -236,7 +236,7 @@ public class ChatFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backArrow:
-                getFragmentManager().popBackStack();
+                Helper.goBackFromFragment(this);
                 break;
         }
     }

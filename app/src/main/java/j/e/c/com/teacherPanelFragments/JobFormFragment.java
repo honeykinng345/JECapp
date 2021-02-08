@@ -54,10 +54,11 @@ public class JobFormFragment extends Fragment {
 
     Teacher2 t2 = Helper.getTeacher2();
     Teacher teacher = Helper.getTeacher();
-    @BindView(R.id.checkbox)
-    CheckBox checkbox;
+
     private ProgressDialog progressDialog;
 
+    @BindView(R.id.checkbox)
+    CheckBox checkbox;
     @BindView(R.id.nationality)
     AppCompatAutoCompleteTextView nationality;
     @BindView(R.id.workPlace)
@@ -124,7 +125,6 @@ public class JobFormFragment extends Fragment {
 
     private void fillForm(Teacher teacher) {
 
-
         name.getEditText().setText(teacher.getName());
         age.getEditText().setText(teacher.getAge());
         nationality.setText(teacher.getNationality());
@@ -144,8 +144,6 @@ public class JobFormFragment extends Fragment {
         whenCanJoin.getEditText().setText(teacher.getJoindate());
         residence.getEditText().setText(teacher.getCurrentworkplace());
 
-
-
         name.getEditText().setEnabled(false);
         age.getEditText().setEnabled(false);
         nationality.setEnabled(false);
@@ -164,7 +162,6 @@ public class JobFormFragment extends Fragment {
         experience.setEnabled(false);
         whenCanJoin.getEditText().setEnabled(false);
         residence.getEditText().setEnabled(false);
-
     }
 
     @Override
@@ -208,11 +205,9 @@ public class JobFormFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backArrow:
-                assert getFragmentManager() != null;
-                getFragmentManager().popBackStack();
+                Helper.goBackFromFragment(this);
                 break;
             case R.id.submitBtn:
-
                 if (validateFields()) {
                     teacher.setName(name.getEditText().getText().toString());
                     teacher.setAge(age.getEditText().getText().toString());
@@ -228,7 +223,6 @@ public class JobFormFragment extends Fragment {
                         teacher.setVisatype(visaType.getText().toString());
                     } else {
                         teacher.setVisatype(" No Visa");
-
                     }
                     teacher.setQFWV(visaQualified.getText().toString());
                     teacher.setWorkplace(workPlace.getText().toString());
@@ -352,7 +346,6 @@ public class JobFormFragment extends Fragment {
         Helper.fill(name);
         Helper.fill(age);
         Helper.fill(nationality);
-
         Helper.fill(gender);
         Helper.fill(salary);
         Helper.fill(education);
@@ -365,8 +358,6 @@ public class JobFormFragment extends Fragment {
         Helper.fill(beenChina);
         Helper.fill(experience);
         Helper.fill(residence);
-
-
     }
 
     private void uploadFileToFireBase(Uri data) {

@@ -77,7 +77,7 @@ SessionManager sessionManager ;
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backArrow:
-                getFragmentManager().popBackStack();
+                Helper.goBackFromFragment(this);
                 break;
             case R.id.applyBtn:
        if (sessionManager.isLoggedIn()){
@@ -93,11 +93,6 @@ SessionManager sessionManager ;
                 }else{
                     Helper.fragmentTransaction(this, new DummyTeacherFragment());
                 }
-
-
-
-
-
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + view.getId());

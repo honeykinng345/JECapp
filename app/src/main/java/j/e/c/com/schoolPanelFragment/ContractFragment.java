@@ -95,8 +95,6 @@ public class ContractFragment extends Fragment {
         slideModels.add(new SlideModel(R.drawable.jeccontract1, ScaleTypes.CENTER_INSIDE));
         slideModels.add(new SlideModel(R.drawable.jeccontract2, ScaleTypes.CENTER_INSIDE));
         contractImages.setImageList(slideModels, ScaleTypes.CENTER_INSIDE);
-
-
         return view;
     }
 
@@ -125,18 +123,13 @@ public class ContractFragment extends Fragment {
                     contractImages.setImageList(slideModels, ScaleTypes.CENTER_INSIDE);
                     contractImages.setTag("d");
                     try {
-
-
                         Bitmap pic1 = Helper.getBitmapFromUri(c1, getContext());
                         Bitmap pic2 = Helper.getBitmapFromUri(c2, getContext());
 
                         contractInfo.setContract_Image(Helper.getStringImage(pic1));
                         contractInfo.setContract_Second_Image(Helper.getStringImage(pic2));
 
-
-
                         //  Toast.makeText(getContext(),""+teacher.getCvpic().length(),Toast.LENGTH_LONG).show();
-
 
                     } catch (Exception e) {
 

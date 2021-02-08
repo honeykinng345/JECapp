@@ -1,26 +1,19 @@
 package j.e.c.com;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import butterknife.ButterKnife;
 import j.e.c.com.Others.Helper;
 import j.e.c.com.chatFragments.ChatFragment;
 import j.e.c.com.commonFragments.FavoriteFragment;
 import j.e.c.com.teacherPanelFragments.HomeFragment;
 import j.e.c.com.teacherPanelFragments.ProfileFragment;
 import j.e.c.com.teacherPanelFragments.RegistrationFragment;
-import j.e.c.com.teacherPanelFragments.TeacherShowingJobsFragment;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         sessionManager = new SessionManager(getApplicationContext());
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
        // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TeacherShowingJobsFragment()).commit();
-
     }
 
     @Override
@@ -56,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
 
-
                 case R.id.navigation_home:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).addToBackStack(null).commit();
                     openFragment(new HomeFragment());
@@ -72,6 +63,21 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getFragments().size();
+        if(count>1) {
+            Fragment currentFragment = getSupportFragmentManager().getFragments().get(count - 1);
+            if (currentFragment != null)
+                Helper.goBackFromFragment(currentFragment);
+            else
+                super.onBackPressed();
+        }else{
+            super.onBackPressed();
+        }
+    }
+
     private void openFragment(Fragment fragment){
         if(!fragment.isVisible()) {
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);

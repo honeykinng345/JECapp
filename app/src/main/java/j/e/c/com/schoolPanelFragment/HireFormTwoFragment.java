@@ -108,9 +108,6 @@ private  String id;
             submitBtn.setVisibility(View.GONE);
             fillForm(school);
         }
-
-        Helper.onBackPressedInFragment(this);
-
     }
 
     private void fetchSchoolId() {
@@ -132,8 +129,6 @@ private  String id;
             case R.id.submitBtn:
                 if (validateFields())
                     setValues();
-
-
                 break;
             case R.id.arrivalDate:
                 Helper.setDate(arrivalDate);
@@ -157,19 +152,13 @@ private  String id;
         school.setStatus("0");
         school.setStid(id);
         sendData();
-
     }
 
     private void sendData() {
-
-        if (n!=0){
+        if (n!=0)
             ProccedNext(new schoolPostedJobFragment());
-
-        }else{
+        else
             ProccedNext(new WelcomeFragment());
-        }
-
-
     }
 
     boolean validateFields() {
@@ -325,7 +314,6 @@ city.getEditText().setEnabled(false);
             Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
         }) {
 
-
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
@@ -354,8 +342,6 @@ city.getEditText().setEnabled(false);
                 params.put("stid", school.getStid());
 
                 return params;
-
-
             }
         };
 

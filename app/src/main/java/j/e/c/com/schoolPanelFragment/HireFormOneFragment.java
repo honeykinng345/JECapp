@@ -85,9 +85,6 @@ public class HireFormOneFragment extends Fragment {
         super.onResume();
         agentSpinner.setAdapter(Helper.getSimpleSpinnerAdapter(R.array.agentArray, getContext()));
         schoolLocationSpinner.setAdapter(Helper.getSimpleSpinnerAdapter(R.array.workSpace, getContext()));
-
-        Helper.onBackPressedInFragment(this);
-
     }
 
 
