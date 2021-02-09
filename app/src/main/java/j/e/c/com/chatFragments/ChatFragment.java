@@ -253,6 +253,7 @@ public class ChatFragment extends Fragment {
                     break;
                 case "School Interview":
                     break;
+
                 default:
                     reInterviewBtn.setOnClickListener(v -> {
                         if(Helper.areYouSure(getContext(), "Do You Want to Interview Again!")) {
