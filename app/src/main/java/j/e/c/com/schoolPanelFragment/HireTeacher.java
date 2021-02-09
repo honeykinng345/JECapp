@@ -57,7 +57,7 @@ public class HireTeacher extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        tids = new ArrayList<String>();
+        tids = new ArrayList<>();
 
         Tids();
         RecevingData();
@@ -79,51 +79,44 @@ public class HireTeacher extends Fragment {
 
         String tag_string_req = "req_login";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, appConfig.URL_isSchoolIdExist,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            //getting the whole json object from the response
-                            JSONObject obj = new JSONObject(response);
+                response -> {
+                    try {
+                        //getting the whole json object from the response
+                        JSONObject obj = new JSONObject(response);
 
-                            Toast.makeText(getContext(),""+obj,Toast.LENGTH_LONG).show();
-                            //we have the array named hero inside the object
-                            //so here we are getting that json array
-                            JSONArray jba = obj.getJSONArray("result");
+                        Toast.makeText(getContext(),""+obj,Toast.LENGTH_LONG).show();
+                        //we have the array named hero inside the object
+                        //so here we are getting that json array
+                        JSONArray jba = obj.getJSONArray("result");
 
-                            if(jba == null){
-                                Helper.fragmentTransaction(HireTeacher.this, new HireFormOneFragment());
-                            }
-
-                            //now looping through all the elements of the json array
-                            else  {
-                                Helper.setSchool( gson.fromJson(String.valueOf(jba.getJSONObject(0)), School.class));
-                                Helper.fragmentTransaction(HireTeacher.this, new HireFormTwoFragment());
-                                //school.setLicenecePicture("url"+school.getLicenecePicture());
-                                //JSONObject sv = services.getJSONObject(i);
-                                //String Demand = sv.getString("Demand");
-                                //tring salary = sv.getString("salary");
-                                //school = new School(Sid,Sname,url);
-                               // schoolArrayList.add(school);
-                               // showingJobAdapter.notifyDataSetChanged();
-                                //getting product object from json array
-                                //  JSONObject categories = heroArray.getJSONObject(i);
-                                //adding the product to product list
-                            }
-                            //creating adapter object and setting it to recyclerview
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if(jba == null){
+                            Helper.fragmentTransaction(HireTeacher.this, new HireFormOneFragment());
                         }
+
+                        //now looping through all the elements of the json array
+                        else  {
+                            Helper.setSchool( gson.fromJson(String.valueOf(jba.getJSONObject(0)), School.class));
+                            Helper.fragmentTransaction(HireTeacher.this, new HireFormTwoFragment());
+                            //school.setLicenecePicture("url"+school.getLicenecePicture());
+                            //JSONObject sv = services.getJSONObject(i);
+                            //String Demand = sv.getString("Demand");
+                            //tring salary = sv.getString("salary");
+                            //school = new School(Sid,Sname,url);
+                           // schoolArrayList.add(school);
+                           // showingJobAdapter.notifyDataSetChanged();
+                            //getting product object from json array
+                            //  JSONObject categories = heroArray.getJSONObject(i);
+                            //adding the product to product list
+                        }
+                        //creating adapter object and setting it to recyclerview
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),
-                                error.getMessage(), Toast.LENGTH_LONG).show();
-                        // spinKitView.setVisibility(View.GONE);
-                    }
-
+                error -> {
+                    Toast.makeText(getActivity(),
+                            error.getMessage(), Toast.LENGTH_LONG).show();
+                    // spinKitView.setVisibility(View.GONE);
                 }) {
             @Override
             protected Map<String, String> getParams() {
@@ -142,66 +135,58 @@ public class HireTeacher extends Fragment {
     private void RecevingData() {
         String tag_string_req = "req_login";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, appConfig.URL_fetchApplicedJobsData,
-
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
+                response -> {
+                    try {
 
 
-                            //getting the whole json object from the response
-                            JSONObject obj = new JSONObject(response);
+                        //getting the whole json object from the response
+                        JSONObject obj = new JSONObject(response);
 
-                            //we have the array named hero inside the object
-                            //so here we are getting that json array
-                            JSONArray jba = obj.getJSONArray("result");
+                        //we have the array named hero inside the object
+                        //so here we are getting that json array
+                        JSONArray jba = obj.getJSONArray("result");
 
-                            //now looping through all the elements of the json array
-                            for (int i = 0; i < jba.length(); i++) {
+                        //now looping through all the elements of the json array
+                        for (int i = 0; i < jba.length(); i++) {
 
-                                teacher = gson.fromJson(String.valueOf(jba.getJSONObject(i)), Teacher.class);
-                                String url = "https://websitejec1.000webhostapp.com/bpic/"+teacher.getBpic();
-
-
-                                teacher.setBpic(url);
-
-                                //school.setLicenecePicture("url"+school.getLicenecePicture());
-
-                                //JSONObject sv = services.getJSONObject(i);
-
-                                //String Demand = sv.getString("Demand");
-                                //tring salary = sv.getString("salary");
+                            teacher = gson.fromJson(String.valueOf(jba.getJSONObject(i)), Teacher.class);
+                            String url = "https://websitejec1.000webhostapp.com/bpic/"+teacher.getBpic();
 
 
-                                //school = new School(Sid,Sname,url);
-                                teacherArrayList.add(teacher);
-                              teacherAdapter.notifyDataSetChanged();
+                            teacher.setBpic(url);
 
-                                //showingJobAdapter.notifyDataSetChanged();
-                                //getting product object from json array
-                                //  JSONObject categories = heroArray.getJSONObject(i);
+                            //school.setLicenecePicture("url"+school.getLicenecePicture());
 
-                                //adding the product to product list
+                            //JSONObject sv = services.getJSONObject(i);
 
-                            }
-                            //creating adapter object and setting it to recyclerview
+                            //String Demand = sv.getString("Demand");
+                            //tring salary = sv.getString("salary");
 
-                        } catch (JSONException e) {
 
-                            e.printStackTrace();
+                            //school = new School(Sid,Sname,url);
+                            teacherArrayList.add(teacher);
+                          teacherAdapter.notifyDataSetChanged();
+
+                            //showingJobAdapter.notifyDataSetChanged();
+                            //getting product object from json array
+                            //  JSONObject categories = heroArray.getJSONObject(i);
+
+                            //adding the product to product list
+
                         }
+                        //creating adapter object and setting it to recyclerview
+
+                    } catch (JSONException e) {
+
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                error -> {
 
-                        Toast.makeText(getActivity(),
-                                error.getMessage(), Toast.LENGTH_LONG).show();
-                        // spinKitView.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(),
+                            error.getMessage(), Toast.LENGTH_LONG).show();
+                    // spinKitView.setVisibility(View.GONE);
 
-
-                    }
 
                 }) { @Override
         protected Map<String, String> getParams() {
@@ -221,73 +206,65 @@ public class HireTeacher extends Fragment {
     private void Tids() {
         String tag_string_req = "req_login";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, appConfig.URL_getTidsFromScheludeTable,
-
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
+                response -> {
+                    try {
 
 
-                            //getting the whole json object from the response
-                            JSONObject obj = new JSONObject(response);
+                        //getting the whole json object from the response
+                        JSONObject obj = new JSONObject(response);
 
-                            //we have the array named hero inside the object
-                            //so here we are getting that json array
-                            JSONArray jba = obj.getJSONArray("result");
-                            Toast.makeText(getContext(),""+jba.getJSONObject(0),Toast.LENGTH_LONG).show();
+                        //we have the array named hero inside the object
+                        //so here we are getting that json array
+                        JSONArray jba = obj.getJSONArray("result");
+                        Toast.makeText(getContext(),""+jba.getJSONObject(0),Toast.LENGTH_LONG).show();
 
-                            //now looping through all the elements of the json array
-                            /*for (JSONObject js: jba
-                                 ) {
+                        //now looping through all the elements of the json array
+                        /*for (JSONObject js: jba
+                             ) {
 
-                            }*/
-                            for (int i = 0; i < jba.length(); i++) {
-                                JSONObject sv = jba.getJSONObject(i);
-                                tid =  sv.getString("tid");
-                                Toast.makeText(getContext(),""+tid,Toast.LENGTH_LONG).show();
+                        }*/
+                        for (int i = 0; i < jba.length(); i++) {
+                            JSONObject sv = jba.getJSONObject(i);
+                            tid =  sv.getString("tid");
+                            Toast.makeText(getContext(),""+tid,Toast.LENGTH_LONG).show();
 
-                                tids.add(tid);
+                            tids.add(tid);
 
 //                                teacherAdapter = new AppliedTeacherAdapter(teacherArrayList, HireTeacher.this);
-                                //recyclerView.setAdapter(teacherAdapter);
-                                //teacherAdapter.notifyDataSetChanged();
+                            //recyclerView.setAdapter(teacherAdapter);
+                            //teacherAdapter.notifyDataSetChanged();
 
 
-                                //school.setLicenecePicture("url"+school.getLicenecePicture());
+                            //school.setLicenecePicture("url"+school.getLicenecePicture());
 
-                                //JSONObject sv = services.getJSONObject(i);
+                            //JSONObject sv = services.getJSONObject(i);
 
-                                //String Demand = sv.getString("Demand");
-                                //tring salary = sv.getString("salary");
+                            //String Demand = sv.getString("Demand");
+                            //tring salary = sv.getString("salary");
 
 
-                                //school = new School(Sid,Sname,url);
+                            //school = new School(Sid,Sname,url);
 
-                                //showingJobAdapter.notifyDataSetChanged();
-                                //getting product object from json array
-                                //  JSONObject categories = heroArray.getJSONObject(i);
+                            //showingJobAdapter.notifyDataSetChanged();
+                            //getting product object from json array
+                            //  JSONObject categories = heroArray.getJSONObject(i);
 
-                                //adding the product to product list
+                            //adding the product to product list
 
-                            }
-                            //creating adapter object and setting it to recyclerview
-
-                        } catch (JSONException e) {
-
-                            e.printStackTrace();
                         }
+                        //creating adapter object and setting it to recyclerview
+
+                    } catch (JSONException e) {
+
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                error -> {
 
-                        Toast.makeText(getActivity(),
-                                error.getMessage(), Toast.LENGTH_LONG).show();
-                        // spinKitView.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(),
+                            error.getMessage(), Toast.LENGTH_LONG).show();
+                    // spinKitView.setVisibility(View.GONE);
 
-
-                    }
 
                 }) { @Override
         protected Map<String, String> getParams() {
