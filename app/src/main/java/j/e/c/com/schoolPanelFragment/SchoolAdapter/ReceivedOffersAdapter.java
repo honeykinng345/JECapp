@@ -1,6 +1,5 @@
 package j.e.c.com.schoolPanelFragment.SchoolAdapter;
 
-import android.app.ProgressDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,6 @@ import j.e.c.com.Models.Teacher;
 import j.e.c.com.Others.Helper;
 import j.e.c.com.Others.ScheduleHelper;
 import j.e.c.com.R;
-import j.e.c.com.SQLiteHandler;
 import j.e.c.com.appConfig;
 import j.e.c.com.chatFragments.ChatFragment;
 import j.e.c.com.commonFragments.NotificationFragment;
@@ -45,8 +43,6 @@ import j.e.c.com.commonFragments.ScheduledInterviewsFragment;
 import j.e.c.com.teacherPanelFragments.JobFormFragment;
 
 public class ReceivedOffersAdapter extends RecyclerView.Adapter<ReceivedOffersAdapter.viewHolder> {
-
-
 
     private ArrayList<Teacher> teacherArrayList;
     private Fragment context;

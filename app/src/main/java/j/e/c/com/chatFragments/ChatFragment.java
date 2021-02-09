@@ -211,22 +211,22 @@ public class ChatFragment extends Fragment {
 
         if (Helper.isTeacherChating)
         {
-            if (Helper.getSchool().getContactNumber().toLowerCase().equals("teacher rejected"))
+            if (Helper.getSchool().getStatus().toLowerCase().equals("teacher rejected"))
             {
                updateBottomSheet("You have rejected the school");
             }
-            else if (Helper.getSchool().getContactNumber().toLowerCase().equals("school rejected"))
+            else if (Helper.getSchool().getStatus().toLowerCase().equals("school rejected"))
             {
                 updateBottomSheet(null);
             }
         }
         else
         {
-            if (Helper.getTeacher().getPhone().toLowerCase().equals("school rejected"))
+            if (Helper.getTeacher().getStatus().toLowerCase().equals("school rejected"))
             {
                 updateBottomSheet("You have rejected the teacher");
             }
-            else  if (Helper.getTeacher().getPhone().toLowerCase().equals("teacher rejected"))
+            else  if (Helper.getTeacher().getStatus().toLowerCase().equals("teacher rejected"))
             {
                 updateBottomSheet(null);
             }
