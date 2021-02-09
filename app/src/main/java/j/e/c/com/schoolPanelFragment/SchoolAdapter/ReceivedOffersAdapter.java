@@ -68,13 +68,10 @@ public class ReceivedOffersAdapter extends RecyclerView.Adapter<ReceivedOffersAd
         switch (teacher.getStatus()) {
             case "0":
                 holder.offer.setText("Offers : "+teacher.getWechatid()+" rmb");
-                holder.accept.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //getPhone is a job id primary ker in this context
-                        ScheduleHelper.scheduleInterview(teacher, context);
-                        //updateJobStatus(teacher.getPhone(), "1");
-                    }
+                holder.accept.setOnClickListener(v -> {
+                    //getPhone is a job id primary ker in this context
+                    ScheduleHelper.scheduleInterview(teacher, context);
+                    //updateJobStatus(teacher.getPhone(), "1");
                 });
                 holder.reject.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -145,6 +142,7 @@ public class ReceivedOffersAdapter extends RecyclerView.Adapter<ReceivedOffersAd
             case "4":
             case "School Rejected":
             case "Teacher Rejected":
+            case "School Interview":
                 holder.accept.setVisibility(View.GONE);
                 holder.reject.setVisibility(View.GONE);
                 holder.offer.setText(R.string.chat);

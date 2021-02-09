@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.solver.state.State;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import j.e.c.com.AppController;
 import j.e.c.com.Others.Helper;
+import j.e.c.com.Others.ScheduleHelper;
 import j.e.c.com.R;
 import j.e.c.com.appConfig;
 import j.e.c.com.chatFragments.models.Message;
@@ -56,6 +58,7 @@ public class ChatFragment extends Fragment {
 
     EditText message;
     ImageView sendBtn, otherBtn, acceptBtn, rejectBtn, reInterviewBtn;
+    TextView interviewNotifiy;
     View icons;
     TextView rejectText;
 
@@ -205,30 +208,59 @@ public class ChatFragment extends Fragment {
         acceptBtn = mCustomBottomSheet.findViewById(R.id.acceptBtn);
         rejectBtn = mCustomBottomSheet.findViewById(R.id.rejectBtn);
         reInterviewBtn = mCustomBottomSheet.findViewById(R.id.reInterview);
+        interviewNotifiy = mCustomBottomSheet.findViewById(R.id.reInterviewNotifiy);
 
         icons = mCustomBottomSheet.findViewById(R.id.icons);
         rejectText = mCustomBottomSheet.findViewById(R.id.rejectText);
 
         if (Helper.isTeacherChating)
         {
-            if (Helper.getSchool().getStatus().toLowerCase().equals("teacher rejected"))
+            switch (Helper.getSchool().getStatus())
             {
-               updateBottomSheet("You have rejected the school");
-            }
-            else if (Helper.getSchool().getStatus().toLowerCase().equals("school rejected"))
-            {
-                updateBottomSheet(null);
+                case "Teacher Rejected":
+                    updateBottomSheet("You have rejected the school");
+                    break;
+                case "School Rejected":
+                    updateBottomSheet(null);
+                    break;
+                case "School Interview":
+                    interviewNotifiy.setVisibility(View.VISIBLE);
+                    reInterviewBtn.setOnClickListener(v -> {
+                        if (Helper.areYouSure(getContext(), "School Wants to take Another Interview"))
+                            SchoolAcceptTeacherAfterInterViewStatusUpdate("1");
+                        else
+                            SchoolAcceptTeacherAfterInterViewStatusUpdate("t not agree");
+                    });
+                    //acceptBtn.setClickable(false);
+                    break;
+                default:
+                    reInterviewBtn.setOnClickListener(v -> {
+                        if(Helper.areYouSure(getContext(), "Do You Want to Interview Again!"))
+                            Helper.alert("Only School can take Interview again!", getContext());
+                    });
+                    break;
             }
         }
         else
         {
-            if (Helper.getTeacher().getStatus().toLowerCase().equals("school rejected"))
+            switch (Helper.getTeacher().getStatus())
             {
-                updateBottomSheet("You have rejected the teacher");
-            }
-            else  if (Helper.getTeacher().getStatus().toLowerCase().equals("teacher rejected"))
-            {
-                updateBottomSheet(null);
+                case "Teacher Rejected":
+                    updateBottomSheet(null);
+                    break;
+                case "School Rejected":
+                    updateBottomSheet("You have rejected the teacher");
+                    break;
+                case "School Interview":
+                    break;
+                default:
+                    reInterviewBtn.setOnClickListener(v -> {
+                        if(Helper.areYouSure(getContext(), "Do You Want to Interview Again!")) {
+                            ScheduleHelper.scheduleInterview(Helper.getTeacher(), this);
+                            SchoolAcceptTeacherAfterInterViewStatusUpdate("School Interview");
+                        }
+                    });
+                    break;
             }
         }
 
@@ -247,18 +279,10 @@ public class ChatFragment extends Fragment {
         });
         rejectBtn.setOnClickListener(v -> {
 
-            if(Helper.areYouSure(getContext(), "Are you sure want to reject!")){
+            if(Helper.areYouSure(getContext(), "Are you sure want to reject!"))
                 openDialoug();
-            }
 
         });
-        reInterviewBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
 
         messageArrayList = new ArrayList<>();
 
@@ -302,12 +326,11 @@ public class ChatFragment extends Fragment {
             });
         }
 
-    private void SchoolAcceptTeacherAfterInterViewStatusUpdate() {
+    private void SchoolAcceptTeacherAfterInterViewStatusUpdate(String status) {
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 appConfig.URL_SchoolAcceptTeacherAfterInterViewStatusUpdate, response -> {
 
             try {
-
                 JSONObject jObj = new JSONObject(response);
                 boolean error = jObj.getBoolean("error");
                 //Toast.makeText(currentFragment.getContext(),""+response,Toast.LENGTH_LONG).show();
@@ -318,7 +341,6 @@ public class ChatFragment extends Fragment {
             } catch (JSONException e) {
                 // JSON error
                 Helper.Toast(getContext(), "SchoolAcceptTeacherAfterInterViewStatusUpdate catch" + e.toString());
-
             }
 
         }, error -> {
@@ -331,18 +353,15 @@ public class ChatFragment extends Fragment {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<>();
-                if (!Helper.isTeacherChating) {
+
+                if (!Helper.isTeacherChating)
                     params.put("id", Helper.getTeacher().getPhone());
-                    params.put("status", "School Rejected");
-                }
-                else {
+                else
                     params.put("id", Helper.getSchool().getContactNumber());
-                    params.put("status", "Teacher Rejected");
-                }
+                params.put("status", status);
 
                 return params;
             }
-
         };
 
         // Adding request to request queue
@@ -387,7 +406,9 @@ public class ChatFragment extends Fragment {
                     //Toast.makeText(currentFragment.getContext(),""+response,Toast.LENGTH_LONG).show();
                     // Check for error node in json
                     if (!error) {
-                        SchoolAcceptTeacherAfterInterViewStatusUpdate();
+                        if (Helper.isTeacherChating)
+                            SchoolAcceptTeacherAfterInterViewStatusUpdate("Teacher Rejected");
+                        else SchoolAcceptTeacherAfterInterViewStatusUpdate("School Rejected");
                     }
                 } catch (JSONException e) {
                     // JSON error

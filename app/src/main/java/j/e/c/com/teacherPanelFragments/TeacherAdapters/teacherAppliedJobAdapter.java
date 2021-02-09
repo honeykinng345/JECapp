@@ -102,6 +102,7 @@ public class teacherAppliedJobAdapter extends RecyclerView.Adapter<teacherApplie
             case "4":
             case "School Rejected":
             case "Teacher Rejected":
+            case "School Interview":
                 holder.btnApplay.setVisibility(View.GONE);
                 holder.chat.setVisibility(View.VISIBLE);
                 holder.chat.setOnClickListener(v -> {
