@@ -258,7 +258,7 @@ public class ChatFragment extends Fragment {
                     reInterviewBtn.setOnClickListener(v -> {
                         if(Helper.areYouSure(getContext(), "Do You Want to Interview Again!")) {
                             ScheduleHelper.scheduleInterview(Helper.getTeacher(), this);
-                            SchoolAcceptTeacherAfterInterViewStatusUpdate("School Interview");
+                            //SchoolAcceptTeacherAfterInterViewStatusUpdate("School Interview");
                         }
                     });
                     break;
