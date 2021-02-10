@@ -252,13 +252,17 @@ public class ChatFragment extends Fragment {
                     updateBottomSheet("You have rejected the teacher");
                     break;
                 case "School Interview":
+                    reInterviewBtn.setOnClickListener(v -> Helper.alert("Scheduled sent already!", getContext()));
+                    break;
+                case "t not agree":
+                    reInterviewBtn.setOnClickListener(v -> Helper.alert("Teacher don't want re-interview!", getContext()));
                     break;
 
                 default:
                     reInterviewBtn.setOnClickListener(v -> {
                         if(Helper.areYouSure(getContext(), "Do You Want to Interview Again!")) {
                             ScheduleHelper.scheduleInterview(Helper.getTeacher(), this);
-                            SchoolAcceptTeacherAfterInterViewStatusUpdate("School Interview");
+                            //SchoolAcceptTeacherAfterInterViewStatusUpdate("School Interview");
                         }
                     });
                     break;
@@ -282,7 +286,6 @@ public class ChatFragment extends Fragment {
 
             if(Helper.areYouSure(getContext(), "Are you sure want to reject!"))
                 openDialoug();
-
         });
 
         messageArrayList = new ArrayList<>();

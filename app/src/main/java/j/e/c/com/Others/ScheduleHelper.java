@@ -27,6 +27,7 @@ import j.e.c.com.AppController;
 import j.e.c.com.Models.Teacher;
 import j.e.c.com.R;
 import j.e.c.com.appConfig;
+import j.e.c.com.chatFragments.ChatFragment;
 
 public class ScheduleHelper {
     public static void scheduleInterview(Teacher teacher, Fragment context) {
@@ -97,7 +98,12 @@ public class ScheduleHelper {
                     // Create login session
                     // Toast.makeText(context.getContext(), "" + jObj, Toast.LENGTH_LONG).show();
                     finalProgressDialog.dismiss();
-                    Helper.updateJobStatus(teacher.getPhone(), "1", context);
+                    String status;
+                    if (context instanceof ChatFragment)
+                        status = "School Interview";
+                    else
+                        status = "1";
+                    Helper.updateJobStatus(teacher.getPhone(), status, context);
                 } else {
                     // Error in login. Get the error message
                     String errorMsg = jObj.getString("error_msg");
