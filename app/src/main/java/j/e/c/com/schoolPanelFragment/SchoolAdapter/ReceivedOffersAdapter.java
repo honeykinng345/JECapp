@@ -139,11 +139,7 @@ public class ReceivedOffersAdapter extends RecyclerView.Adapter<ReceivedOffersAd
                     }
                 });
                 break;*/
-            case "4":
-            case "School Rejected":
-            case "Teacher Rejected":
-            case "School Interview":
-            case "t not agree":
+            default:
                 holder.accept.setVisibility(View.GONE);
                 holder.reject.setVisibility(View.GONE);
                 holder.offer.setText(R.string.chat);
