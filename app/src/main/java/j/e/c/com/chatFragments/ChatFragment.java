@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.solver.state.State;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -58,10 +57,10 @@ public class ChatFragment extends Fragment {
     BottomSheetBehavior mBottomSheetBehavior;
 
     EditText message;
-    ImageView sendBtn, otherBtn, acceptBtn, rejectBtn, reInterviewBtn;
+    ImageView sendBtn, otherBtn, acceptBtn, rejectBtn, reInterviewBtn, contractBtn;
     TextView interviewNotifiy, acceptNotifiy;
     View icons;
-    TextView rejectText;
+    TextView rejectText, contractText;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -146,8 +145,9 @@ public class ChatFragment extends Fragment {
 
         if (m.isEmpty()) {
             Toast.makeText(getActivity(), "Not Send Empty Message", Toast.LENGTH_LONG).show();
-            return;
-        } else {
+        }
+        else
+            {
             StringRequest strReq = new StringRequest(Request.Method.POST,
                     appConfig.URL_chat_message, response -> {
                 // Toast.makeText(getActivity(),"ok"+response,Toast.LENGTH_LONG).show();
@@ -209,14 +209,21 @@ public class ChatFragment extends Fragment {
         acceptBtn = mCustomBottomSheet.findViewById(R.id.acceptBtn);
         rejectBtn = mCustomBottomSheet.findViewById(R.id.rejectBtn);
         reInterviewBtn = mCustomBottomSheet.findViewById(R.id.reInterview);
+        contractBtn = mCustomBottomSheet.findViewById(R.id.contractBtn);
+
         interviewNotifiy = mCustomBottomSheet.findViewById(R.id.reInterviewNotifiy);
         acceptNotifiy = mCustomBottomSheet.findViewById(R.id.acceptNotifiy);
 
         icons = mCustomBottomSheet.findViewById(R.id.icons);
         rejectText = mCustomBottomSheet.findViewById(R.id.rejectText);
+        contractText = mCustomBottomSheet.findViewById(R.id.contractText);
 
         if (Helper.isTeacherChating)
         {
+
+            contractBtn.setImageResource(R.drawable.ic_bsheet_download);
+            contractText.setText("Download Contract");
+
             switch (Helper.getSchool().getStatus())
             {
                 case "Teacher Rejected":
@@ -344,6 +351,12 @@ public class ChatFragment extends Fragment {
                         break;
                 }
             }
+        });
+        contractBtn.setOnClickListener(v -> {
+            if (Helper.isTeacherChating)
+                Helper.alert("Contract Not Uploaded Yet!", getContext());
+            else
+                Helper.alert("Please Upload The Contrac", getContext());
         });
 
         messageArrayList = new ArrayList<>();

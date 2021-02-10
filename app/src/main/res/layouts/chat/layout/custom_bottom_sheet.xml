@@ -65,7 +65,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="4"
-        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_17sdp"
+        android:layout_marginHorizontal="@dimen/_17sdp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -105,6 +106,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/bottom_sheet_margin"
                         android:text="Accept"
                         android:textSize="@dimen/bottom_sheet_text_size"/>
 
@@ -145,6 +147,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bottom_sheet_margin"
                 android:text="Reject"
                 android:textSize="@dimen/bottom_sheet_text_size"/>
 
@@ -191,6 +194,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bottom_sheet_margin"
                 android:text="Re Interview"
                 android:textSize="@dimen/bottom_sheet_text_size"/>
 
@@ -230,7 +234,63 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bottom_sheet_margin"
                 android:text="Benefits"
+                android:textSize="@dimen/bottom_sheet_text_size"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="4"
+        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_marginHorizontal="@dimen/_17sdp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/contractBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_bsheet_upload"/>
+
+                <TextView
+                    android:id="@+id/contractNotifiy"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="@dimen/_25sdp"
+                    android:gravity="center"
+                    android:text="!"
+                    android:textSize="8sp"
+                    android:background="@drawable/reactcircle"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorwhite"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:id="@+id/contractText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bottom_sheet_margin"
+                android:text="Upload Contract"
                 android:textSize="@dimen/bottom_sheet_text_size"/>
 
 
