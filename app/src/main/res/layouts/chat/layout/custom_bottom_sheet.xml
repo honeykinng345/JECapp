@@ -85,13 +85,17 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_bsheet_accept"/>
 
-                <ImageView
+                <TextView
                     android:id="@+id/acceptNotifiy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_add_circle_outline_24"
-                    android:layout_marginLeft="@dimen/_21sdp"
-                    app:tint="@color/black"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="@dimen/_25sdp"
+                    android:gravity="center"
+                    android:text="!"
+                    android:textSize="8sp"
+                    android:background="@drawable/reactcircle"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorwhite"
                     android:visibility="gone"/>
 
             </RelativeLayout>

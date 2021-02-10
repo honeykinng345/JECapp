@@ -42,6 +42,7 @@ import butterknife.OnClick;
 import j.e.c.com.AppController;
 import j.e.c.com.Others.Helper;
 import j.e.c.com.Others.ScheduleHelper;
+import j.e.c.com.Others.StaticVariables;
 import j.e.c.com.R;
 import j.e.c.com.appConfig;
 import j.e.c.com.chatFragments.models.Message;
@@ -58,7 +59,7 @@ public class ChatFragment extends Fragment {
 
     EditText message;
     ImageView sendBtn, otherBtn, acceptBtn, rejectBtn, reInterviewBtn;
-    TextView interviewNotifiy;
+    TextView interviewNotifiy, acceptNotifiy;
     View icons;
     TextView rejectText;
 
@@ -209,6 +210,7 @@ public class ChatFragment extends Fragment {
         rejectBtn = mCustomBottomSheet.findViewById(R.id.rejectBtn);
         reInterviewBtn = mCustomBottomSheet.findViewById(R.id.reInterview);
         interviewNotifiy = mCustomBottomSheet.findViewById(R.id.reInterviewNotifiy);
+        acceptNotifiy = mCustomBottomSheet.findViewById(R.id.acceptNotifiy);
 
         icons = mCustomBottomSheet.findViewById(R.id.icons);
         rejectText = mCustomBottomSheet.findViewById(R.id.rejectText);
@@ -225,19 +227,10 @@ public class ChatFragment extends Fragment {
                     break;
                 case "School Interview":
                     interviewNotifiy.setVisibility(View.VISIBLE);
-                    reInterviewBtn.setOnClickListener(v -> {
-                        if (Helper.areYouSure(getContext(), "School Wants to take Another Interview"))
-                            SchoolAcceptTeacherAfterInterViewStatusUpdate("1");
-                        else
-                            SchoolAcceptTeacherAfterInterViewStatusUpdate("t not agree");
-                    });
-                    //acceptBtn.setClickable(false);
                     break;
-                default:
-                    reInterviewBtn.setOnClickListener(v -> {
-                        if(Helper.areYouSure(getContext(), "Do You Want to Interview Again!"))
-                            Helper.alert("Only School can take Interview again!", getContext());
-                    });
+                case StaticVariables.SCHOOL_ACCEPTED:
+                case StaticVariables.BOTH_ACCEPTED:
+                    acceptNotifiy.setVisibility(View.VISIBLE);
                     break;
             }
         }
@@ -251,20 +244,12 @@ public class ChatFragment extends Fragment {
                 case "School Rejected":
                     updateBottomSheet("You have rejected the teacher");
                     break;
-                case "School Interview":
-                    reInterviewBtn.setOnClickListener(v -> Helper.alert("Scheduled sent already!", getContext()));
+                case StaticVariables.TEACHER_ACCEPTED:
+                case StaticVariables.BOTH_ACCEPTED:
+                    acceptNotifiy.setVisibility(View.VISIBLE);
                     break;
                 case "t not agree":
-                    reInterviewBtn.setOnClickListener(v -> Helper.alert("Teacher don't want re-interview!", getContext()));
-                    break;
-
-                default:
-                    reInterviewBtn.setOnClickListener(v -> {
-                        if(Helper.areYouSure(getContext(), "Do You Want to Interview Again!")) {
-                            ScheduleHelper.scheduleInterview(Helper.getTeacher(), this);
-                            //SchoolAcceptTeacherAfterInterViewStatusUpdate("School Interview");
-                        }
-                    });
+                    interviewNotifiy.setVisibility(View.VISIBLE);
                     break;
             }
         }
@@ -277,15 +262,88 @@ public class ChatFragment extends Fragment {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
+
         acceptBtn.setOnClickListener(v -> {
-            if(Helper.areYouSure(getContext(), "Are you sure to accept!"))
-                Helper.Toast(getContext(), "accepted");
-            else Helper.Toast(getContext(), "cencel ac");
+
+            if (Helper.isTeacherChating)
+            {
+                switch (Helper.getSchool().getStatus())
+                {
+                    case StaticVariables.TEACHER_ACCEPTED:
+                        Helper.alert("You accepted already! Plz wait for response", getContext());
+                        break;
+                    case StaticVariables.SCHOOL_ACCEPTED:
+                        if (Helper.areYouSure(getContext(), "School is agree. Do you want to get hired?"))
+                            SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.BOTH_ACCEPTED);
+                        break;
+                    case StaticVariables.BOTH_ACCEPTED:
+                        Helper.alert("Both parites are agree, wait for contract", getContext());
+                        break;
+                    default:
+                        if (Helper.areYouSure(getContext(), "Are you agree for this job?"))
+                            SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.TEACHER_ACCEPTED);
+                        break;
+                }
+            }
+            else
+            {
+                switch (Helper.getTeacher().getStatus())
+                {
+                    case StaticVariables.SCHOOL_ACCEPTED:
+                        Helper.alert("You accepted already! Plz wait for response", getContext());
+                        break;
+                    case StaticVariables.TEACHER_ACCEPTED:
+                        if (Helper.areYouSure(getContext(), "Teacher is agree. Do you want to hire him?"))
+                            SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.BOTH_ACCEPTED);
+                        break;
+                    case StaticVariables.BOTH_ACCEPTED:
+                        Helper.alert("Both parites are agree", getContext());
+                        break;
+                    default:
+                        if (Helper.areYouSure(getContext(), "do you want to hire him?"))
+                            SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.SCHOOL_ACCEPTED);
+                        break;
+                }
+            }
         });
         rejectBtn.setOnClickListener(v -> {
-
             if(Helper.areYouSure(getContext(), "Are you sure want to reject!"))
                 openDialoug();
+        });
+        reInterviewBtn.setOnClickListener(v -> {
+            if (Helper.isTeacherChating)
+            {
+                switch (Helper.getSchool().getStatus())
+                {
+                    case "School Interview":
+                            if (Helper.areYouSure(getContext(), "School Wants to take Another Interview"))
+                                SchoolAcceptTeacherAfterInterViewStatusUpdate("1");
+                            else
+                                SchoolAcceptTeacherAfterInterViewStatusUpdate("t not agree");
+                        //acceptBtn.setClickable(false);
+                        break;
+                    default:
+                        Helper.alert("Only School can take Interview again!", getContext());
+                        break;
+                }
+            }
+            else
+            {
+                switch (Helper.getSchool().getStatus())
+                {
+                    case "School Interview":
+                        Helper.alert("Scheduled sent already!", getContext());
+                        break;
+                    case "t not agree":
+                        Helper.alert("Teacher don't want re-interview!", getContext());
+                        break;
+                    default:
+                        if(Helper.areYouSure(getContext(), "Do You Want to Interview Again!")) {
+                            ScheduleHelper.scheduleInterview(Helper.getTeacher(), ChatFragment.this);
+                        }
+                        break;
+                }
+            }
         });
 
         messageArrayList = new ArrayList<>();

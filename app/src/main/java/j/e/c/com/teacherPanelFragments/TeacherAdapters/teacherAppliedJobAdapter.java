@@ -99,11 +99,7 @@ public class teacherAppliedJobAdapter extends RecyclerView.Adapter<teacherApplie
                 holder.chat.setText("");
                 holder.chat.setOnClickListener(v -> Helper.fragmentTransaction(currentFragment,new NotificationFragment()));
                 break;*/
-            case "4":
-            case "School Rejected":
-            case "Teacher Rejected":
-            case "School Interview":
-            case "t not agree":
+            default:
                 holder.btnApplay.setVisibility(View.GONE);
                 holder.chat.setVisibility(View.VISIBLE);
                 holder.chat.setOnClickListener(v -> {
