@@ -106,7 +106,7 @@ public class ScheduleHelper {
                     Helper.updateJobStatus(teacher.getPhone(), status, context);
                 } else {
                     // Error in login. Get the error message
-                    String errorMsg = jObj.getString("error_msg");
+                    String errorMsg = jObj.getString("message");
                     Toast.makeText(context.getContext(), errorMsg, Toast.LENGTH_LONG).show();
                     finalProgressDialog.dismiss();
                 }
@@ -118,8 +118,8 @@ public class ScheduleHelper {
             }
 
         }, error -> {
-            Toast.makeText(context.getContext(),
-                    error.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context.getContext(),"errro"+
+                    error.toString(), Toast.LENGTH_LONG).show();
             finalProgressDialog1.dismiss();
         }) {
 

@@ -31,6 +31,7 @@ public class appConfig {
     public static String URL_chat_message ="http://jeccompany.ml/android_login_api/chat.php";
     public static String URL_updateApplayTableRow ="http://jeccompany.ml/android_login_api/updateApplayTableRow.php";
     public static String URL_SchoolAcceptTeacherAfterInterViewStatusUpdate ="http://jeccompany.ml/android_login_api/SchoolAcceptTeacherAfterInterViewStatusUpdate.php";
+    public static String URL_checkSchoolContractWithJec="http://jeccompany.ml/android_login_api/checkSchoolContractWithJec.php";
     // images  URL ...
     public static  String URL_MAIN_IMAGES= "http://jeccompany.ml";
     public static String URL_TEACHERS_IMGAES =URL_MAIN_IMAGES+"/bpic/";

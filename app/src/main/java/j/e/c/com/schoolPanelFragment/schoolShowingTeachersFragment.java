@@ -290,8 +290,6 @@ public class schoolShowingTeachersFragment extends Fragment {
 
     void doFurther(ArrayList<Teacher> teachers){
         clonedList.clear();
-        for (Teacher teacher: teachers){
-            clonedList.add(teacher);
-        }
+        clonedList.addAll(teachers);
     }
 }
