@@ -1,6 +1,8 @@
 package j.e.c.com.chatFragments;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -45,6 +47,9 @@ import j.e.c.com.Others.StaticVariables;
 import j.e.c.com.R;
 import j.e.c.com.appConfig;
 import j.e.c.com.chatFragments.models.Message;
+import j.e.c.com.commonFragments.PaymentFragment;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ChatFragment extends Fragment {
 
@@ -353,10 +358,15 @@ public class ChatFragment extends Fragment {
             }
         });
         contractBtn.setOnClickListener(v -> {
-            if (Helper.isTeacherChating)
+            if (Helper.isTeacherChating) {
                 Helper.alert("Contract Not Uploaded Yet!", getContext());
-            else
-                Helper.alert("Please Upload The Contrac", getContext());
+            }
+            else{
+                if (Helper.getTeacher().getStatus().equals(StaticVariables.BOTH_ACCEPTED))
+                    checkSchoolContractWithJEC(Helper.getSchool().getId(), Helper.getTeacher().getTid());
+                else
+                    Helper.alert("Both Parties Need to be agree", getContext());
+            }
         });
 
         messageArrayList = new ArrayList<>();
@@ -366,6 +376,25 @@ public class ChatFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         getMessages();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null) {
+            switch (requestCode) {
+                case Helper.IMAGE_REQUEST_CODE:
+                    //Uri fiePath = data.getData();
+
+                    //picture.setImageURI(fiePath);
+                   /* bitmap = (Bitmap) data.getExtras().get("data");
+                    picture.setImageBitmap(bitmap);
+                    picture.setVisibility(View.VISIBLE);
+
+                    school.setLicenseLiveImage(Helper.getStringImage(bitmap));*/
+                    break;
+            }
+        }
     }
 
     private void updateBottomSheet(String text) {
@@ -514,4 +543,43 @@ public class ChatFragment extends Fragment {
 
 
     }
+
+    void checkSchoolContractWithJEC(String jid, String tid){
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                appConfig.URL_checkSchoolContractWithJec, response -> {
+            try {
+                JSONObject jObj = new JSONObject(response);
+                boolean result = jObj.getBoolean("result");
+                if (result) {
+                    Helper.getFileFromStorage(ChatFragment.this, Helper.IMAGE_REQUEST_CODE);
+                }else {
+                    if (Helper.areYouSure(getContext(), "First You need to make contract with JEC"))
+                        Helper.fragmentTransaction(ChatFragment.this, new PaymentFragment());
+                }
+            } catch (JSONException e) {
+                // JSON error
+                e.printStackTrace();
+                Toast.makeText(getContext(), "checkSchoolContractWithJEC catch: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }, error -> {
+            Toast.makeText(getContext(),
+                    "checkSchoolContractWithJEC error: " + error.toString(), Toast.LENGTH_LONG).show();
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<>();
+                params.put("jid", jid);
+                params.put("tid", tid);
+
+                return params;
+            }
+
+        };
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+
 }
