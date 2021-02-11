@@ -1,11 +1,14 @@
 package j.e.c.com.chatFragments;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -31,6 +34,14 @@ import com.android.volley.request.StringRequest;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +65,7 @@ import j.e.c.com.chatFragments.models.Message;
 import j.e.c.com.commonFragments.PaymentFragment;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.DOWNLOAD_SERVICE;
 
 public class ChatFragment extends Fragment {
 
@@ -67,7 +79,7 @@ public class ChatFragment extends Fragment {
 
     EditText message;
     ImageView sendBtn, otherBtn, acceptBtn, rejectBtn, reInterviewBtn, contractBtn;
-    TextView interviewNotifiy, acceptNotifiy;
+    TextView interviewNotifiy, acceptNotifiy, contractNotifiy;
     View icons;
     TextView rejectText, contractText;
 
@@ -75,6 +87,9 @@ public class ChatFragment extends Fragment {
     RecyclerView recyclerView;
     @BindView(R.id.messageBar)
     CoordinatorLayout messageBar;
+    private DownloadManager dm;
+    private long enqueue;
+    private Uri a;
 
 
     @Nullable
@@ -222,6 +237,7 @@ public class ChatFragment extends Fragment {
 
         interviewNotifiy = mCustomBottomSheet.findViewById(R.id.reInterviewNotifiy);
         acceptNotifiy = mCustomBottomSheet.findViewById(R.id.acceptNotifiy);
+        contractNotifiy = mCustomBottomSheet.findViewById(R.id.contractNotifiy);
 
         icons = mCustomBottomSheet.findViewById(R.id.icons);
         rejectText = mCustomBottomSheet.findViewById(R.id.rejectText);
@@ -245,8 +261,10 @@ public class ChatFragment extends Fragment {
                     interviewNotifiy.setVisibility(View.VISIBLE);
                     break;
                 case StaticVariables.SCHOOL_ACCEPTED:
-                case StaticVariables.BOTH_ACCEPTED:
                     acceptNotifiy.setVisibility(View.VISIBLE);
+                    break;
+                case StaticVariables.CONTRACT_UPLOADED:
+                    contractNotifiy.setVisibility(View.VISIBLE);
                     break;
             }
         }
@@ -264,7 +282,7 @@ public class ChatFragment extends Fragment {
                 case StaticVariables.BOTH_ACCEPTED:
                     acceptNotifiy.setVisibility(View.VISIBLE);
                     break;
-                case "t not agree":
+                case StaticVariables.TEACHER_REJECTED_REINTERVIEW:
                     interviewNotifiy.setVisibility(View.VISIBLE);
                     break;
             }
@@ -289,14 +307,19 @@ public class ChatFragment extends Fragment {
                         Helper.alert("You accepted already! Plz wait for response", getContext());
                         break;
                     case StaticVariables.SCHOOL_ACCEPTED:
-                        if (Helper.areYouSure(getContext(), "School is agree. Do you want to get hired?"))
+                        if (Helper.areYouSure(getContext(), "School is agree. Do you want to get hired?", "YES", "NO")) {
                             SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.BOTH_ACCEPTED);
+                        }
+                       /* else {
+                            if (Helper.areYouSure(getContext(), "Are You Sure You Want To Reject This Job", "YES", "NO"))
+                                SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.TEACHER_REJECTED_JOB);
+                        }*/
                         break;
                     case StaticVariables.BOTH_ACCEPTED:
                         Helper.alert("Both parites are agree, wait for contract", getContext());
                         break;
                     default:
-                        if (Helper.areYouSure(getContext(), "Are you agree for this job?"))
+                        if (Helper.areYouSure(getContext(), "Are you agree for this job?", "YES", "NO"))
                             SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.TEACHER_ACCEPTED);
                         break;
                 }
@@ -309,21 +332,21 @@ public class ChatFragment extends Fragment {
                         Helper.alert("You accepted already! Plz wait for response", getContext());
                         break;
                     case StaticVariables.TEACHER_ACCEPTED:
-                        if (Helper.areYouSure(getContext(), "Teacher is agree. Do you want to hire him?"))
+                        if (Helper.areYouSure(getContext(), "Teacher is agree. Do you want to hire him?", "YES", "NO"))
                             SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.BOTH_ACCEPTED);
                         break;
                     case StaticVariables.BOTH_ACCEPTED:
-                        Helper.alert("Both parites are agree", getContext());
+                        Helper.alert("Both parites are agreed, Plz upload contract", getContext());
                         break;
                     default:
-                        if (Helper.areYouSure(getContext(), "do you want to hire him?"))
+                        if (Helper.areYouSure(getContext(), "do you want to hire him?", "YES", "NO"))
                             SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.SCHOOL_ACCEPTED);
                         break;
                 }
             }
         });
         rejectBtn.setOnClickListener(v -> {
-            if(Helper.areYouSure(getContext(), "Are you sure want to reject!"))
+            if(Helper.areYouSure(getContext(), "Are you sure want to reject!", "YES", "NO"))
                 openDialoug();
         });
         reInterviewBtn.setOnClickListener(v -> {
@@ -332,11 +355,10 @@ public class ChatFragment extends Fragment {
                 switch (Helper.getSchool().getStatus())
                 {
                     case "School Interview":
-                            if (Helper.areYouSure(getContext(), "School Wants to take Another Interview"))
+                            if (Helper.areYouSure(getContext(), "School Wants to take Another Interview", "ACCEPT", "REJECT"))
                                 SchoolAcceptTeacherAfterInterViewStatusUpdate("1");
                             else
-                                SchoolAcceptTeacherAfterInterViewStatusUpdate("t not agree");
-                        //acceptBtn.setClickable(false);
+                                SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.TEACHER_REJECTED_REINTERVIEW);
                         break;
                     default:
                         Helper.alert("Only School can take Interview again!", getContext());
@@ -345,16 +367,16 @@ public class ChatFragment extends Fragment {
             }
             else
             {
-                switch (Helper.getSchool().getStatus())
+                switch (Helper.getTeacher().getStatus())
                 {
                     case "School Interview":
                         Helper.alert("Scheduled sent already!", getContext());
                         break;
-                    case "t not agree":
+                    case StaticVariables.TEACHER_REJECTED_REINTERVIEW:
                         Helper.alert("Teacher don't want re-interview!", getContext());
                         break;
                     default:
-                        if(Helper.areYouSure(getContext(), "Do You Want to Interview Again!")) {
+                        if(Helper.areYouSure(getContext(), "Do You Want to Interview Again!", "YES", "NO")) {
                             ScheduleHelper.scheduleInterview(Helper.getTeacher(), ChatFragment.this);
                         }
                         break;
@@ -362,8 +384,37 @@ public class ChatFragment extends Fragment {
             }
         });
         contractBtn.setOnClickListener(v -> {
-            if (Helper.isTeacherChating) {
-                Helper.alert("Contract Not Uploaded Yet!", getContext());
+            if (Helper.isTeacherChating)
+            {
+                if (Helper.getSchool().getStatus().equals(StaticVariables.CONTRACT_UPLOADED))
+                {
+                    Dexter.withContext(getContext()).withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE).withListener(new PermissionListener() {
+                        @Override
+                        public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                            getContractFromDB(Helper.getSchool().getId(), Helper.getTeacher().getTid());
+                        }
+
+                        @Override
+                        public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                        }
+
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                        }
+                    }).withErrorListener(new PermissionRequestErrorListener() {
+                        @Override
+                        public void onError(DexterError dexterError) {
+                            Helper.alert(dexterError.toString(), getContext());
+                        }
+                    }).check();
+
+                }
+                else
+                {
+                    Helper.alert("Contract Not Uploaded Yet!", getContext());
+                }
             }
             else{
                 if (Helper.getTeacher().getStatus().equals(StaticVariables.BOTH_ACCEPTED))
@@ -380,6 +431,55 @@ public class ChatFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         getMessages();
+    }
+
+    private void downloadContract(String url) {
+
+       /* BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+                    long downloadId = intent.getLongExtra(
+                            DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+                    DownloadManager.Query query = new DownloadManager.Query();
+                    query.setFilterById(enqueue);
+                    Cursor c = dm.query(query);
+                    if (c.moveToFirst()) {
+                        int columnIndex = c
+                                .getColumnIndex(DownloadManager.COLUMN_STATUS);
+                        if (DownloadManager.STATUS_SUCCESSFUL == c
+                                .getInt(columnIndex)) {
+
+                            //ImageView view = (ImageView) findViewById(R.id.imageView1);
+                            String uriString = c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+
+                            a = Uri.parse(uriString);
+                            File d = new File(a.getPath());
+                            // copy file from external to internal will esaily avalible on net use google.
+                            //view.setImageURI(a);
+                        }
+                    }
+                }
+            }
+        };
+
+        getActivity().registerReceiver(receiver, new IntentFilter(
+                DownloadManager.ACTION_DOWNLOAD_COMPLETE));*/
+
+
+        String fileName = "Contract" + Helper.getSchool().getStid() + System.currentTimeMillis() + ".jpg";
+
+        dm = (DownloadManager) getActivity().getSystemService(DOWNLOAD_SERVICE);
+        DownloadManager.Request request = new DownloadManager.Request(
+                Uri.parse(url))
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+        request.setTitle(fileName);
+        request.setDescription(fileName);
+        request.setVisibleInDownloadsUi(true);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+
+        enqueue = dm.enqueue(request);
     }
 
     @Override
@@ -404,6 +504,8 @@ public class ChatFragment extends Fragment {
 
     private void updateBottomSheet(String text) {
         icons.setVisibility(View.GONE);
+        contractBtn.setVisibility(View.GONE);
+        contractText.setVisibility(View.GONE);
         rejectText.setVisibility(View.VISIBLE);
         if (text != null)
             rejectText.setText(text);
@@ -557,7 +659,7 @@ public class ChatFragment extends Fragment {
                 if (result) {
                     Helper.getFileFromStorage(ChatFragment.this, Helper.IMAGE_REQUEST_CODE);
                 }else {
-                    if (Helper.areYouSure(getContext(), "First You need to make contract with JEC"))
+                    if (Helper.areYouSure(getContext(), "First You need to make contract with JEC", "OK", "CANCEL"))
                         Helper.fragmentTransaction(ChatFragment.this, new PaymentFragment());
                 }
             } catch (JSONException e) {
@@ -600,6 +702,7 @@ public class ChatFragment extends Fragment {
                 boolean result = jObj.getBoolean("result");
                 if (result) {
                     Helper.alert( "Contract Uploaded Successfully", getContext());
+                    SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.CONTRACT_UPLOADED);
                 }else {
                    Helper.alert("Some error occurred!", getContext());
                 }
@@ -622,6 +725,50 @@ public class ChatFragment extends Fragment {
                 params.put("jid", jid);
                 params.put("tid", tid);
                 params.put("image", image);
+
+                return params;
+            }
+
+        };
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    void getContractFromDB(String jid, String tid){
+
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setTitle("Please Wait..");
+        //progressDialog.setMessage("Please Wait We Are Uploading Your Information");
+        progressDialog.show();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, appConfig.URL_DownloadContract, response -> {
+            progressDialog.dismiss();
+            try {
+                JSONObject jObj = new JSONObject(response);
+                String result = jObj.getString("result");
+                if (result != null) {
+                   downloadContract(appConfig.TEACHER_CONTRACT_IMGAES + result);
+                }else {
+                    Helper.alert("null", getContext());
+                }
+            } catch (JSONException e) {
+                // JSON error
+                e.printStackTrace();
+                Toast.makeText(getContext(), "getContractFromDB catch: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }, error -> {
+            progressDialog.dismiss();
+            Toast.makeText(getContext(),
+                    "getContractFromDB error: " + error.toString(), Toast.LENGTH_LONG).show();
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<>();
+                params.put("jid", jid);
+                params.put("tid", tid);
 
                 return params;
             }

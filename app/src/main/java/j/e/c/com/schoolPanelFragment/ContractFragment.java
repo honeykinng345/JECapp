@@ -195,37 +195,34 @@ public class ContractFragment extends Fragment {
         String tag_string_req = "req_login";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, appConfig.URL_ContractInformation,
 
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            boolean error = obj.getBoolean("error");
-                            //Toast.makeText(currentFragment.getContext(),""+response,Toast.LENGTH_LONG).show();
-                            // Check for error node in json
-                            if (!error) {
-                                // user successfully logged in
-                                // Create login session
+                response -> {
+                    try {
+                        JSONObject obj = new JSONObject(response);
+                        boolean error = obj.getBoolean("error");
+                        //Toast.makeText(currentFragment.getContext(),""+response,Toast.LENGTH_LONG).show();
+                        // Check for error node in json
+                        if (!error) {
+                            // user successfully logged in
+                            // Create login session
 
-                                Toast.makeText(getContext(),"Contract Is Submitted",Toast.LENGTH_LONG).show();
-                                getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+                            Toast.makeText(getContext(),"Contract Is Submitted",Toast.LENGTH_LONG).show();
+                            getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
 
 
-                            } else {
-                                // Error in login. Get the error message
-                                String errorMsg = obj.getString("error_msg");
-                                Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
+                        } else {
+                            // Error in login. Get the error message
+                            String errorMsg = obj.getString("error_msg");
+                            Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
 
-                            }
-
-                            //getting the whole json object from the response
-
-
-                        } catch (JSONException e) {
-
-                            e.printStackTrace();
                         }
+
+                        //getting the whole json object from the response
+
+
+                    } catch (JSONException e) {
+
+                        e.printStackTrace();
                     }
                 },
                 new Response.ErrorListener() {

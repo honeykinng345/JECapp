@@ -98,11 +98,9 @@ public class ScheduleHelper {
                     // Create login session
                     // Toast.makeText(context.getContext(), "" + jObj, Toast.LENGTH_LONG).show();
                     finalProgressDialog.dismiss();
-                    String status;
+                    String status = "1";
                     if (context instanceof ChatFragment)
                         status = "School Interview";
-                    else
-                        status = "1";
                     Helper.updateJobStatus(teacher.getPhone(), status, context);
                 } else {
                     // Error in login. Get the error message

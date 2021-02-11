@@ -302,7 +302,7 @@ public class Helper {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
-    public static boolean areYouSure(Context context, String message){
+    public static boolean areYouSure(Context context, String message, String okBtn, String cancelBtn){
 
         final boolean[] result = new boolean[1];
         final Handler handler = new Handler()
@@ -319,13 +319,13 @@ public class Helper {
 
         alert.setCancelable(false);
 
-        alert.setPositiveButton("OK", (dialog, whichButton) -> {
+        alert.setPositiveButton(okBtn, (dialog, whichButton) -> {
             //What ever you want to do with the value
             result[0] = true;
             handler.sendMessage(handler.obtainMessage());
         });
 
-        alert.setNegativeButton("CANCEL", (dialog, whichButton) -> {
+        alert.setNegativeButton(cancelBtn, (dialog, whichButton) -> {
             // what ever you want to do with No option.
             result[0] = false;
             handler.sendMessage(handler.obtainMessage());
@@ -450,45 +450,34 @@ public class Helper {
 
     public static void updateJobStatus(String phone, String status, Fragment context) {
 
-
-
         String tag_string_req = "req_login";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, appConfig.URL_updateApplayTableRow,
+                response -> {
+                    try {
 
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
+                        //  Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
+                        //getting the whole json object from the response
+                        JSONObject obj = new JSONObject(response);
 
-                            //  Toast.makeText(getContext(),""+response,Toast.LENGTH_LONG).show();
-                            //getting the whole json object from the response
-                            JSONObject obj = new JSONObject(response);
+                        //we have the array named hero inside the object
+                        //so here we are getting that json array
+                        Boolean result = obj.getBoolean("result");
 
-                            //we have the array named hero inside the object
-                            //so here we are getting that json array
-                            Boolean result = obj.getBoolean("result");
-
-                            if (result){
-                                context.onResume();
-                            }
-
-
-                        } catch (JSONException e) {
-
-                            e.printStackTrace();
+                        if (result){
+                            context.onResume();
                         }
+
+
+                    } catch (JSONException e) {
+
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                error -> {
 
-                        Toast.makeText(context.getContext(),
-                                error.getMessage(), Toast.LENGTH_LONG).show();
-                        // spinKitView.setVisibility(View.GONE);
+                    Toast(context.getContext(), "updateJobStatus " + error.toString());
+                    // spinKitView.setVisibility(View.GONE);
 
-
-                    }
 
                 }) { @Override
         protected Map<String, String> getParams() {

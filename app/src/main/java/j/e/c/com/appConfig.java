@@ -33,7 +33,9 @@ public class appConfig {
     public static String URL_SchoolAcceptTeacherAfterInterViewStatusUpdate ="http://jeccompany.ml/android_login_api/SchoolAcceptTeacherAfterInterViewStatusUpdate.php";
     public static String URL_checkSchoolContractWithJec="http://jeccompany.ml/android_login_api/checkSchoolContractWithJec.php";
     public static String URL_UploadContractForTeacher="http://jeccompany.ml/android_login_api/SchoolContractWithTeacher.php";
+    public static String URL_DownloadContract="http://jeccompany.ml/android_login_api/showContractIMageToTeacher.php";
     // images  URL ...
     public static  String URL_MAIN_IMAGES= "http://jeccompany.ml";
     public static String URL_TEACHERS_IMGAES =URL_MAIN_IMAGES+"/bpic/";
+    public static String TEACHER_CONTRACT_IMGAES =URL_MAIN_IMAGES+"/Contract_Teacher_Images/";
 }
