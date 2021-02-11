@@ -1,6 +1,7 @@
 package j.e.c.com.chatFragments;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -384,14 +385,12 @@ public class ChatFragment extends Fragment {
         if (resultCode == RESULT_OK && data != null) {
             switch (requestCode) {
                 case Helper.IMAGE_REQUEST_CODE:
-                    //Uri fiePath = data.getData();
 
-                    //picture.setImageURI(fiePath);
-                   /* bitmap = (Bitmap) data.getExtras().get("data");
-                    picture.setImageBitmap(bitmap);
-                    picture.setVisibility(View.VISIBLE);
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    uploadContract(
+                            Helper.getSchool().getStid(), Helper.getSchool().getId(),
+                            Helper.getTeacher().getTid(), Helper.getStringImage(bitmap));
 
-                    school.setLicenseLiveImage(Helper.getStringImage(bitmap));*/
                     break;
             }
         }
@@ -545,8 +544,7 @@ public class ChatFragment extends Fragment {
     }
 
     void checkSchoolContractWithJEC(String jid, String tid){
-        StringRequest strReq = new StringRequest(Request.Method.POST,
-                appConfig.URL_checkSchoolContractWithJec, response -> {
+        StringRequest strReq = new StringRequest(Request.Method.POST, appConfig.URL_checkSchoolContractWithJec, response -> {
             try {
                 JSONObject jObj = new JSONObject(response);
                 boolean result = jObj.getBoolean("result");
@@ -572,6 +570,52 @@ public class ChatFragment extends Fragment {
                 Map<String, String> params = new HashMap<>();
                 params.put("jid", jid);
                 params.put("tid", tid);
+
+                return params;
+            }
+
+        };
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    void uploadContract(String sid, String jid, String tid, String image){
+
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setTitle("Please Wait..");
+        //progressDialog.setMessage("Please Wait We Are Uploading Your Information");
+        progressDialog.show();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, appConfig.URL_UploadContractForTeacher, response -> {
+            progressDialog.dismiss();
+            try {
+                JSONObject jObj = new JSONObject(response);
+                boolean result = jObj.getBoolean("result");
+                if (result) {
+                    Helper.alert( "Contract Uploaded Successfully", getContext());
+                }else {
+                   Helper.alert("Some error occurred!", getContext());
+                }
+            } catch (JSONException e) {
+                // JSON error
+                e.printStackTrace();
+                Toast.makeText(getContext(), "uploadContract catch: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }, error -> {
+            progressDialog.dismiss();
+            Toast.makeText(getContext(),
+                    "uploadContract error: " + error.toString(), Toast.LENGTH_LONG).show();
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<>();
+                params.put("sid", sid);
+                params.put("jid", jid);
+                params.put("tid", tid);
+                params.put("image", image);
 
                 return params;
             }

@@ -106,9 +106,6 @@ public class HireFormOneFragment extends Fragment {
                     school.setLicenseLiveImage(Helper.getStringImage(bitmap));
                     break;
                 case Helper.CV_REQUEST_CODE:
-
-
-
                     try {
                         Uri pdfPath = data.getData();
                         licenseImage.setImageURI(pdfPath);
@@ -125,11 +122,6 @@ public class HireFormOneFragment extends Fragment {
 
                         Helper.ShowSnackBar(snackbarAction,e.getMessage());
                     }
-
-
-
-
-
                     break;
             }
         }
