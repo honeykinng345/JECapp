@@ -4,9 +4,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -382,15 +385,18 @@ public class ChatFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null) {
+        if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             switch (requestCode) {
                 case Helper.IMAGE_REQUEST_CODE:
-
-                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                    uploadContract(
-                            Helper.getSchool().getStid(), Helper.getSchool().getId(),
-                            Helper.getTeacher().getTid(), Helper.getStringImage(bitmap));
-
+                    Uri filePath = data.getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                        uploadContract(
+                                Helper.getSchool().getStid(), Helper.getSchool().getId(),
+                                Helper.getTeacher().getTid(), Helper.getStringImage(bitmap));
+                    }catch (Exception e){
+                        Log.d("contractImg", e.toString());
+                    }
                     break;
             }
         }
