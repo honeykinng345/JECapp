@@ -6,4 +6,5 @@ public class StaticVariables {
     public static final String BOTH_ACCEPTED = "both accepted";
     public static final String TEACHER_REJECTED_REINTERVIEW = "t not agree";
     public static final String CONTRACT_UPLOADED = "cu";
+    public static final String CONTRACT_FILLED_TEACHER = "cf";
 }

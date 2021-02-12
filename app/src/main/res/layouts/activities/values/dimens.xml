@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="bottom_sheet_text_size">@dimen/_7ssp</dimen>
+    <dimen name="bottom_sheet_text_size">@dimen/_6ssp</dimen>
     <dimen name="bottom_sheet_margin">@dimen/_5sdp</dimen>
     <dimen name="bottom_sheet_icon_size">48dp</dimen>
 </resources>

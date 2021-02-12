@@ -36,11 +36,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.json.JSONArray;
@@ -78,10 +76,10 @@ public class ChatFragment extends Fragment {
     BottomSheetBehavior mBottomSheetBehavior;
 
     EditText message;
-    ImageView sendBtn, otherBtn, acceptBtn, rejectBtn, reInterviewBtn, contractBtn;
-    TextView interviewNotifiy, acceptNotifiy, contractNotifiy;
-    View icons;
-    TextView rejectText, contractText;
+    ImageView sendBtn, otherBtn, acceptBtn, rejectBtn, reInterviewBtn, contractBtn, filledContractBtn;
+    TextView interviewNotifiy, acceptNotifiy, contractNotifiy, filledContractNotifiy;
+    View icons, filledContractView;
+    TextView rejectText, contractText, filledContractText;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -234,14 +232,19 @@ public class ChatFragment extends Fragment {
         rejectBtn = mCustomBottomSheet.findViewById(R.id.rejectBtn);
         reInterviewBtn = mCustomBottomSheet.findViewById(R.id.reInterview);
         contractBtn = mCustomBottomSheet.findViewById(R.id.contractBtn);
+        filledContractBtn = mCustomBottomSheet.findViewById(R.id.uploadFilledContractBtn);
 
         interviewNotifiy = mCustomBottomSheet.findViewById(R.id.reInterviewNotifiy);
         acceptNotifiy = mCustomBottomSheet.findViewById(R.id.acceptNotifiy);
         contractNotifiy = mCustomBottomSheet.findViewById(R.id.contractNotifiy);
+        filledContractNotifiy = mCustomBottomSheet.findViewById(R.id.filledContractNotifiy);
 
         icons = mCustomBottomSheet.findViewById(R.id.icons);
         rejectText = mCustomBottomSheet.findViewById(R.id.rejectText);
         contractText = mCustomBottomSheet.findViewById(R.id.contractText);
+        filledContractText = mCustomBottomSheet.findViewById(R.id.filledContractText);
+        filledContractView = mCustomBottomSheet.findViewById(R.id.uploadFilledContractView);
+
 
         if (Helper.isTeacherChating)
         {
@@ -270,6 +273,8 @@ public class ChatFragment extends Fragment {
         }
         else
         {
+            filledContractBtn.setImageResource(R.drawable.ic_bsheet_download);
+            filledContractText.setText("Filled Contract");
             switch (Helper.getTeacher().getStatus())
             {
                 case "Teacher Rejected":
@@ -284,6 +289,9 @@ public class ChatFragment extends Fragment {
                     break;
                 case StaticVariables.TEACHER_REJECTED_REINTERVIEW:
                     interviewNotifiy.setVisibility(View.VISIBLE);
+                    break;
+                case StaticVariables.CONTRACT_FILLED_TEACHER:
+                    filledContractNotifiy.setVisibility(View.VISIBLE);
                     break;
             }
         }
@@ -391,7 +399,9 @@ public class ChatFragment extends Fragment {
                     Dexter.withContext(getContext()).withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE).withListener(new PermissionListener() {
                         @Override
                         public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                            getContractFromDB(Helper.getSchool().getId(), Helper.getTeacher().getTid());
+                            getContractFromDB(
+                                    Helper.getSchool().getId(), null, Helper.getTeacher().getTid(),
+                                    appConfig.URL_DownloadContract);
                         }
 
                         @Override
@@ -403,12 +413,7 @@ public class ChatFragment extends Fragment {
                         public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
 
                         }
-                    }).withErrorListener(new PermissionRequestErrorListener() {
-                        @Override
-                        public void onError(DexterError dexterError) {
-                            Helper.alert(dexterError.toString(), getContext());
-                        }
-                    }).check();
+                    }).withErrorListener(dexterError -> Helper.alert(dexterError.toString(), getContext())).check();
 
                 }
                 else
@@ -421,6 +426,34 @@ public class ChatFragment extends Fragment {
                     checkSchoolContractWithJEC(Helper.getSchool().getId(), Helper.getTeacher().getTid());
                 else
                     Helper.alert("Both Parties Need to be agree", getContext());
+            }
+        });
+        filledContractBtn.setOnClickListener(v -> {
+            if (Helper.isTeacherChating) {
+                Helper.getFileFromStorage(ChatFragment.this, Helper.CV_REQUEST_CODE);
+            }
+            else{
+                if (Helper.getTeacher().getStatus().equals(StaticVariables.CONTRACT_FILLED_TEACHER)){
+                    Dexter.withContext(getContext()).withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE).withListener(new PermissionListener() {
+                        @Override
+                        public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                            getContractFromDB(Helper.getSchool().getId(), Helper.getSchool().getStid(),
+                                    Helper.getTeacher().getTid(), appConfig.URL_DownloadFilledContract);
+                        }
+
+                        @Override
+                        public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                        }
+
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                        }
+                    }).withErrorListener(dexterError -> Helper.alert(dexterError.toString(), getContext())).check();
+
+                }
+                else Helper.alert("Filled Contract Not Uploaded Yet!", getContext());
             }
         });
 
@@ -486,18 +519,20 @@ public class ChatFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
-            switch (requestCode) {
-                case Helper.IMAGE_REQUEST_CODE:
-                    Uri filePath = data.getData();
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                        uploadContract(
-                                Helper.getSchool().getStid(), Helper.getSchool().getId(),
-                                Helper.getTeacher().getTid(), Helper.getStringImage(bitmap));
-                    }catch (Exception e){
-                        Log.d("contractImg", e.toString());
-                    }
-                    break;
+            try {
+                Uri filePath = data.getData();
+                String url = null;
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                if (requestCode == Helper.IMAGE_REQUEST_CODE)
+                    url = appConfig.URL_UploadContractForTeacher;
+                else if (requestCode == Helper.CV_REQUEST_CODE)
+                    url = appConfig.URL_UpoloadFilledContract;
+                uploadContract(
+                        Helper.getSchool().getStid(), Helper.getSchool().getId(),
+                        Helper.getTeacher().getTid(), Helper.getStringImage(bitmap),
+                        url);
+            }catch (Exception e){
+                Log.d("contractImg", e.toString());
             }
         }
     }
@@ -687,7 +722,7 @@ public class ChatFragment extends Fragment {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    void uploadContract(String sid, String jid, String tid, String image){
+    void uploadContract(String sid, String jid, String tid, String image, String apiUrl){
 
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setCanceledOnTouchOutside(false);
@@ -695,14 +730,16 @@ public class ChatFragment extends Fragment {
         //progressDialog.setMessage("Please Wait We Are Uploading Your Information");
         progressDialog.show();
 
-        StringRequest strReq = new StringRequest(Request.Method.POST, appConfig.URL_UploadContractForTeacher, response -> {
+        StringRequest strReq = new StringRequest(Request.Method.POST, apiUrl, response -> {
             progressDialog.dismiss();
             try {
                 JSONObject jObj = new JSONObject(response);
                 boolean result = jObj.getBoolean("result");
                 if (result) {
                     Helper.alert( "Contract Uploaded Successfully", getContext());
-                    SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.CONTRACT_UPLOADED);
+                    if (!Helper.isTeacherChating)
+                        SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.CONTRACT_UPLOADED);
+                    else SchoolAcceptTeacherAfterInterViewStatusUpdate(StaticVariables.CONTRACT_FILLED_TEACHER);
                 }else {
                    Helper.alert("Some error occurred!", getContext());
                 }
@@ -734,7 +771,7 @@ public class ChatFragment extends Fragment {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    void getContractFromDB(String jid, String tid){
+    void getContractFromDB(String jid, String sid, String tid, String apiUrl){
 
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setCanceledOnTouchOutside(false);
@@ -742,7 +779,7 @@ public class ChatFragment extends Fragment {
         //progressDialog.setMessage("Please Wait We Are Uploading Your Information");
         progressDialog.show();
 
-        StringRequest strReq = new StringRequest(Request.Method.POST, appConfig.URL_DownloadContract, response -> {
+        StringRequest strReq = new StringRequest(Request.Method.POST, apiUrl, response -> {
             progressDialog.dismiss();
             try {
                 JSONObject jObj = new JSONObject(response);
@@ -768,6 +805,8 @@ public class ChatFragment extends Fragment {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<>();
                 params.put("jid", jid);
+                if (sid != null)
+                    params.put("sid", sid);
                 params.put("tid", tid);
 
                 return params;

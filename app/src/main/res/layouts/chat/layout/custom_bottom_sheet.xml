@@ -296,6 +296,52 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/uploadFilledContractView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/uploadFilledContractBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_bsheet_upload"/>
+
+                <TextView
+                    android:id="@+id/filledContractNotifiy"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="@dimen/_25sdp"
+                    android:gravity="center"
+                    android:text="!"
+                    android:textSize="8sp"
+                    android:background="@drawable/reactcircle"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorwhite"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:id="@+id/filledContractText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bottom_sheet_margin"
+                android:text="Upload Filled Contract"
+                android:textSize="@dimen/bottom_sheet_text_size"/>
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
